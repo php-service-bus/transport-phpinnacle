@@ -15,8 +15,20 @@
     </php>
 
     <testsuites>
-        <testsuite name="Service bus amqp transport implementation">
+        <testsuite name="phpinnacle amqp transport bridge">
             <directory>./tests/</directory>
+        </testsuite>
+
+        <testsuite name="Service Bus common">
+            <directory>./vendor/php-service-bus/common/tests/</directory>
+        </testsuite>
+
+        <testsuite name="Service bus transport common">
+            <directory>./vendor/php-service-bus/transport-common/tests/</directory>
+        </testsuite>
+
+        <testsuite name="Service Bus common amqp">
+            <directory>./vendor/php-service-bus/transport-amqp/tests/</directory>
         </testsuite>
     </testsuites>
 

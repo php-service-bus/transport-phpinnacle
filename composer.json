@@ -19,7 +19,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "ServiceBus\\Transport\\PhpInnacle\\Tests\\": "tests/"
+      "ServiceBus\\Transport\\PhpInnacle\\Tests\\": "tests/",
+      "ServiceBus\\Common\\Tests\\": "vendor/php-service-bus/common/tests"
     }
   },
   "require": {
