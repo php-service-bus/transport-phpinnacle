@@ -1,7 +1,7 @@
 <?php
 
 /**
- * phpinnacle transport module for PHP Service Bus
+ * phpinnacle transport bridge for PHP Service Bus
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -10,7 +10,7 @@
 
 declare(strict_types = 1);
 
-namespace ServiceBus\Transport\Amqp\PhpInnacle;
+namespace ServiceBus\Transport\PhpInnacle;
 
 use function Amp\call;
 use Amp\Emitter;
@@ -66,7 +66,7 @@ final class PhpInnacleTransport implements Transport
     private $logger;
 
     /**
-     * @var array<string, \ServiceBus\Transport\Amqp\PhpInnacle\PhpInnacleConsumer>
+     * @var array<string, \ServiceBus\Transport\PhpInnacle\PhpInnacleConsumer>
      */
     private $consumers = [];
 

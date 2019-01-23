@@ -1,15 +1,16 @@
 <?php
 
 /**
- * PHP Service Bus (publish-subscribe pattern) amqp transport implementation
+ * phpinnacle transport bridge for PHP Service Bus
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
  * @license https://opensource.org/licenses/MIT
  */
+
 declare(strict_types = 1);
 
-namespace ServiceBus\Transport\Amqp\Tests\PhpInnacle;
+namespace ServiceBus\Transport\PhpInnacle\Tests;
 
 use function Amp\Promise\wait;
 use PHPUnit\Framework\TestCase;
@@ -20,8 +21,8 @@ use ServiceBus\Transport\Amqp\AmqpConnectionConfiguration;
 use ServiceBus\Transport\Amqp\AmqpExchange;
 use ServiceBus\Transport\Amqp\AmqpQueue;
 use ServiceBus\Transport\Amqp\AmqpTransportLevelDestination;
-use ServiceBus\Transport\Amqp\PhpInnacle\PhpInnacleIncomingPackage;
-use ServiceBus\Transport\Amqp\PhpInnacle\PhpInnacleTransport;
+use ServiceBus\Transport\PhpInnacle\PhpInnacleIncomingPackage;
+use ServiceBus\Transport\PhpInnacle\PhpInnacleTransport;
 use ServiceBus\Transport\Common\Package\OutboundPackage;
 use ServiceBus\Transport\Common\QueueBind;
 use ServiceBus\Transport\Common\TopicBind;

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "68070cff265e64433f96bcf82e2396bf",
-    "content-hash": "59ea8fc0d1c91e5f59d98893b61ade68",
+    "hash": "b1182434d03a7cda92db6a80231098af",
+    "content-hash": "260534b56d5b0a59b793908f6238a601",
     "packages": [
         {
             "name": "amphp/amp",
@@ -800,12 +800,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-service-bus/common.git",
-                "reference": "92f10fcc8c3d18662bff25eb8ed5b826f0e53ca5"
+                "reference": "21bc9ce34e11d4b8065826268d7f357993917fcf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-service-bus/common/zipball/92f10fcc8c3d18662bff25eb8ed5b826f0e53ca5",
-                "reference": "92f10fcc8c3d18662bff25eb8ed5b826f0e53ca5",
+                "url": "https://api.github.com/repos/php-service-bus/common/zipball/21bc9ce34e11d4b8065826268d7f357993917fcf",
+                "reference": "21bc9ce34e11d4b8065826268d7f357993917fcf",
                 "shasum": ""
             },
             "require": {
@@ -847,7 +847,7 @@
                 "event-sourcing",
                 "messaging"
             ],
-            "time": "2019-01-22 12:41:14"
+            "time": "2019-01-23 07:25:30"
         },
         {
             "name": "php-service-bus/transport-amqp",
@@ -855,12 +855,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-service-bus/transport-amqp.git",
-                "reference": "a1d8d0e6a9f472f92a29b2af30a77f2be1911526"
+                "reference": "6db554cd211d29b086773acc9637bfbae2ee96eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-service-bus/transport-amqp/zipball/a1d8d0e6a9f472f92a29b2af30a77f2be1911526",
-                "reference": "a1d8d0e6a9f472f92a29b2af30a77f2be1911526",
+                "url": "https://api.github.com/repos/php-service-bus/transport-amqp/zipball/6db554cd211d29b086773acc9637bfbae2ee96eb",
+                "reference": "6db554cd211d29b086773acc9637bfbae2ee96eb",
                 "shasum": ""
             },
             "require": {
@@ -890,7 +890,7 @@
                     "role": "Developer"
                 }
             ],
-            "description": "PHP Service Bus (publish-subscribe pattern) amqp transport common implementation",
+            "description": "PHP Service Bus amqp common implementation",
             "keywords": [
                 "async-php",
                 "command-bus",
@@ -898,7 +898,7 @@
                 "event-sourcing",
                 "messaging"
             ],
-            "time": "2019-01-22 12:52:52"
+            "time": "2019-01-23 15:00:43"
         },
         {
             "name": "php-service-bus/transport-common",
@@ -906,12 +906,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-service-bus/transport-common.git",
-                "reference": "6f73ced30881d842bb81781f589363ee60e44db4"
+                "reference": "68946e0edc1da0111e6e4fad9ac656382573accc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-service-bus/transport-common/zipball/6f73ced30881d842bb81781f589363ee60e44db4",
-                "reference": "6f73ced30881d842bb81781f589363ee60e44db4",
+                "url": "https://api.github.com/repos/php-service-bus/transport-common/zipball/68946e0edc1da0111e6e4fad9ac656382573accc",
+                "reference": "68946e0edc1da0111e6e4fad9ac656382573accc",
                 "shasum": ""
             },
             "require": {
@@ -940,7 +940,7 @@
                     "role": "Developer"
                 }
             ],
-            "description": "PHP Service Bus (publish-subscribe pattern) transport common parts",
+            "description": "PHP Service Bus transport common parts",
             "keywords": [
                 "async-php",
                 "command-bus",
@@ -948,7 +948,7 @@
                 "event-sourcing",
                 "messaging"
             ],
-            "time": "2019-01-21 11:01:04"
+            "time": "2019-01-23 14:44:11"
         },
         {
             "name": "phpinnacle/buffer",
@@ -2340,55 +2340,6 @@
             "time": "2019-01-15 08:19:08"
         },
         {
-            "name": "psr/container",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/container.git",
-                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/container/zipball/b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
-                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Psr\\Container\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
-                }
-            ],
-            "description": "Common Container Interface (PHP FIG PSR-11)",
-            "homepage": "https://github.com/php-fig/container",
-            "keywords": [
-                "PSR-11",
-                "container",
-                "container-interface",
-                "container-interop",
-                "psr"
-            ],
-            "time": "2017-02-14 16:28:37"
-        },
-        {
             "name": "psr/log",
             "version": "1.1.0",
             "source": {
@@ -3059,69 +3010,6 @@
             "time": "2016-10-03 07:35:21"
         },
         {
-            "name": "symfony/config",
-            "version": "v4.2.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/config.git",
-                "reference": "a7a7d0a0244cfc82f040729ccf769e6cf55a78fb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/a7a7d0a0244cfc82f040729ccf769e6cf55a78fb",
-                "reference": "a7a7d0a0244cfc82f040729ccf769e6cf55a78fb",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1.3",
-                "symfony/filesystem": "~3.4|~4.0",
-                "symfony/polyfill-ctype": "~1.8"
-            },
-            "conflict": {
-                "symfony/finder": "<3.4"
-            },
-            "require-dev": {
-                "symfony/dependency-injection": "~3.4|~4.0",
-                "symfony/event-dispatcher": "~3.4|~4.0",
-                "symfony/finder": "~3.4|~4.0",
-                "symfony/yaml": "~3.4|~4.0"
-            },
-            "suggest": {
-                "symfony/yaml": "To use the yaml reference dumper"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.2-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Config\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Config Component",
-            "homepage": "https://symfony.com",
-            "time": "2019-01-03 09:07:35"
-        },
-        {
             "name": "symfony/console",
             "version": "v4.2.2",
             "source": {
@@ -3257,129 +3145,6 @@
                 "standards"
             ],
             "time": "2018-12-05 08:06:11"
-        },
-        {
-            "name": "symfony/dependency-injection",
-            "version": "v4.2.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/dependency-injection.git",
-                "reference": "a28dda9df1d5494367454cad91e44751ac53921c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/a28dda9df1d5494367454cad91e44751ac53921c",
-                "reference": "a28dda9df1d5494367454cad91e44751ac53921c",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1.3",
-                "psr/container": "^1.0",
-                "symfony/contracts": "^1.0"
-            },
-            "conflict": {
-                "symfony/config": "<4.2",
-                "symfony/finder": "<3.4",
-                "symfony/proxy-manager-bridge": "<3.4",
-                "symfony/yaml": "<3.4"
-            },
-            "provide": {
-                "psr/container-implementation": "1.0",
-                "symfony/service-contracts-implementation": "1.0"
-            },
-            "require-dev": {
-                "symfony/config": "~4.2",
-                "symfony/expression-language": "~3.4|~4.0",
-                "symfony/yaml": "~3.4|~4.0"
-            },
-            "suggest": {
-                "symfony/config": "",
-                "symfony/expression-language": "For using expressions in service container configuration",
-                "symfony/finder": "For using double-star glob patterns or when GLOB_BRACE portability is required",
-                "symfony/proxy-manager-bridge": "Generate service proxies to lazy load them",
-                "symfony/yaml": ""
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.2-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\DependencyInjection\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony DependencyInjection Component",
-            "homepage": "https://symfony.com",
-            "time": "2019-01-05 16:37:49"
-        },
-        {
-            "name": "symfony/filesystem",
-            "version": "v4.2.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/filesystem.git",
-                "reference": "c2ffd9a93f2d6c5be2f68a0aa7953cc229f871f8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/c2ffd9a93f2d6c5be2f68a0aa7953cc229f871f8",
-                "reference": "c2ffd9a93f2d6c5be2f68a0aa7953cc229f871f8",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1.3",
-                "symfony/polyfill-ctype": "~1.8"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.2-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Filesystem\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Filesystem Component",
-            "homepage": "https://symfony.com",
-            "time": "2019-01-03 09:07:35"
         },
         {
             "name": "symfony/polyfill-mbstring",

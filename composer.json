@@ -1,6 +1,6 @@
 {
-  "name": "php-service-bus/module-phpinnacle-transport",
-  "description": "phpinnacle transport module for PHP Service Bus",
+  "name": "php-service-bus/transport-phpinnacle",
+  "description": "phpinnacle transport bridge",
   "type": "library",
   "keywords": ["cqrs", "event-sourcing", "async-php", "command-bus", "messaging"],
   "authors": [
@@ -14,12 +14,12 @@
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "ServiceBus\\Transport\\Amqp\\PhpInnacle\\": "src/"
+      "ServiceBus\\Transport\\PhpInnacle\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "ServiceBus\\Transport\\Amqp\\PhpInnacle\\Tests\\": "tests/"
+      "ServiceBus\\Transport\\PhpInnacle\\Tests\\": "tests/"
     }
   },
   "require": {
@@ -29,8 +29,6 @@
     "phpinnacle/ridge": "^0.1"
   },
   "require-dev": {
-    "symfony/config": "^v4.2",
-    "symfony/dependency-injection": "^v4.2",
     "phpunit/phpunit": "^7",
     "vimeo/psalm": "^3"
   },

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * phpinnacle transport module for PHP Service Bus
+ * phpinnacle transport bridge for PHP Service Bus
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -10,7 +10,7 @@
 
 declare(strict_types = 1);
 
-namespace ServiceBus\Transport\Amqp\PhpInnacle;
+namespace ServiceBus\Transport\PhpInnacle;
 
 use function Amp\call;
 use Amp\Promise;
@@ -91,7 +91,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
      */
     public function origin(): DeliveryDestination
     {
-        return AmqpTransportLevelDestination::create(
+        return new AmqpTransportLevelDestination(
             $this->originMessage->exchange(),
             $this->originMessage->routingKey()
         );
