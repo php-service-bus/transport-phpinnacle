@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "692c19fe21981e633cb08792b4a17d4e",
-    "content-hash": "260534b56d5b0a59b793908f6238a601",
+    "hash": "0c5c37319d880c44b035a1a340d28bb2",
+    "content-hash": "def79ac51208a82f251706eb3d6ab0a6",
     "packages": [
         {
             "name": "amphp/amp",
@@ -3242,16 +3242,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "3.0.13",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "0bb5143efd2350bcbb01f06f5374a4c6cf5a7a4b"
+                "reference": "c195e8fd21a197a783f2d2bdb310ce6e03fd49f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/0bb5143efd2350bcbb01f06f5374a4c6cf5a7a4b",
-                "reference": "0bb5143efd2350bcbb01f06f5374a4c6cf5a7a4b",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/c195e8fd21a197a783f2d2bdb310ce6e03fd49f0",
+                "reference": "c195e8fd21a197a783f2d2bdb310ce6e03fd49f0",
                 "shasum": ""
             },
             "require": {
@@ -3315,7 +3315,7 @@
                 "inspection",
                 "php"
             ],
-            "time": "2019-01-29 15:34:31"
+            "time": "2019-01-30 20:40:37"
         },
         {
             "name": "webmozart/assert",
@@ -3466,7 +3466,8 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "php-service-bus/transport-amqp": 20,
-        "php-service-bus/common": 20
+        "php-service-bus/common": 20,
+        "vimeo/psalm": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
