@@ -1,7 +1,7 @@
 <?php
 
 /**
- * phpinnacle transport bridge for PHP Service Bus
+ * phpinnacle RabbitMQ adapter
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -52,6 +52,7 @@ final class PhpInnacleConfigurator
     {
         try
         {
+            /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
             yield $this->channel->queueDeclare(
                 (string) $queue, $queue->isPassive(), $queue->isDurable(), $queue->isExclusive(),
                 $queue->autoDeleteEnabled(), false, $queue->arguments()
@@ -86,6 +87,7 @@ final class PhpInnacleConfigurator
 
                 yield from $this->doCreateExchange($destinationExchange);
 
+                /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
                 yield $this->channel->queueBind((string) $queue, (string) $destinationExchange, (string) $bind->routingKey);
             }
         }
@@ -108,6 +110,7 @@ final class PhpInnacleConfigurator
     {
         try
         {
+            /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
             yield $this->channel->exchangeDeclare(
                 (string) $exchange, $exchange->type(), $exchange->isPassive(), $exchange->isDurable(),
                 false, false, false, $exchange->arguments()
@@ -122,7 +125,7 @@ final class PhpInnacleConfigurator
     /**
      * Bind exchange to another exchange(s)
      *
-     * @param AmqpExchange                                                           $exchange
+     * @param AmqpExchange                                         $exchange
      * @param array<mixed, \ServiceBus\Transport\Common\TopicBind> $binds
      *
      * @return \Generator
@@ -141,6 +144,8 @@ final class PhpInnacleConfigurator
                 $sourceExchange = $bind->destinationTopic;
 
                 yield from $this->doCreateExchange($sourceExchange);
+
+                /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
                 yield $this->channel->exchangeBind((string) $sourceExchange, (string) $exchange, (string) $bind->routingKey);
             }
         }

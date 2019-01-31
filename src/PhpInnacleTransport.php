@@ -1,7 +1,7 @@
 <?php
 
 /**
- * phpinnacle transport bridge for PHP Service Bus
+ * phpinnacle RabbitMQ adapter
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -103,9 +103,13 @@ final class PhpInnacleTransport implements Transport
 
                 try
                 {
+                    /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
                     yield $this->client->connect();
 
-                    /** @var Channel $channel */
+                    /**
+                     * @psalm-suppress TooManyTemplateParams Wrong Promise template
+                     * @var Channel $channel
+                     */
                     $channel = yield $this->client->channel();
 
                     $this->channel = $channel;
@@ -135,6 +139,7 @@ final class PhpInnacleTransport implements Transport
                 {
                     if(true === $this->client->isConnected())
                     {
+                        /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
                         yield $this->client->disconnect();
                     }
                 }
@@ -147,6 +152,8 @@ final class PhpInnacleTransport implements Transport
     }
 
     /**
+     * @psalm-suppress MixedTypeCoercion
+     *
      * @inheritDoc
      */
     public function consume(Queue $queue): Promise

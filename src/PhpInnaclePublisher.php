@@ -1,7 +1,7 @@
 <?php
 
 /**
- * phpinnacle transport bridge for PHP Service Bus
+ * phpinnacle RabbitMQ adapter
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -84,6 +84,7 @@ final class PhpInnaclePublisher
                     'expiredAt'          => $outboundPackage->expiredAfter
                 ]);
 
+                /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
                 yield $channel->publish(
                     $content,
                     $destination->exchange,

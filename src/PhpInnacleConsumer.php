@@ -1,7 +1,7 @@
 <?php
 
 /**
- * phpinnacle transport bridge for PHP Service Bus
+ * phpinnacle RabbitMQ adapter
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -81,6 +81,7 @@ final class PhpInnacleConsumer
             'consumerTag' => $this->tag
         ]);
 
+        /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
         return $this->channel->consume(
             self::createMessageHandler($logger, $onMessageReceived), $queueName, (string) $this->tag
         );
@@ -97,6 +98,7 @@ final class PhpInnacleConsumer
         return call(
             function(): \Generator
             {
+                /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
                 yield $this->channel->cancel($this->tag);
 
                 $this->logger->info('Subscription canceled', [

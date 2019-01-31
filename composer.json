@@ -1,8 +1,14 @@
 {
   "name": "php-service-bus/transport-phpinnacle",
-  "description": "phpinnacle transport bridge",
+  "description": "phpinnacle RabbitMQ adapter",
   "type": "library",
-  "keywords": ["cqrs", "event-sourcing", "async-php", "command-bus", "messaging"],
+  "keywords": [
+    "async-php",
+    "command-bus",
+    "messaging",
+    "amqp",
+    "rabbitmq"
+  ],
   "authors": [
     {
       "name": "Masiukevich Maksim",
@@ -19,8 +25,10 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "ServiceBus\\Transport\\PhpInnacle\\Tests\\": "tests/",
-      "ServiceBus\\Common\\Tests\\": "vendor/php-service-bus/common/tests"
+      "ServiceBus\\Common\\Tests\\": "vendor/php-service-bus/common/tests",
+      "ServiceBus\\Transport\\Common\\Tests\\": "vendor/php-service-bus/transport-common/tests",
+      "ServiceBus\\Transport\\Amqp\\Tests\\": "vendor/php-service-bus/transport-amqp/tests",
+      "ServiceBus\\Transport\\PhpInnacle\\Tests\\": "tests/"
     }
   },
   "require": {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "37b113bc6a1b115797fab2cd129028cf",
+    "hash": "692c19fe21981e633cb08792b4a17d4e",
     "content-hash": "260534b56d5b0a59b793908f6238a601",
     "packages": [
         {
@@ -800,12 +800,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-service-bus/common.git",
-                "reference": "21bc9ce34e11d4b8065826268d7f357993917fcf"
+                "reference": "7945f503f01e94d083bfb3784e7717922b3ccbe4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-service-bus/common/zipball/21bc9ce34e11d4b8065826268d7f357993917fcf",
-                "reference": "21bc9ce34e11d4b8065826268d7f357993917fcf",
+                "url": "https://api.github.com/repos/php-service-bus/common/zipball/7945f503f01e94d083bfb3784e7717922b3ccbe4",
+                "reference": "7945f503f01e94d083bfb3784e7717922b3ccbe4",
                 "shasum": ""
             },
             "require": {
@@ -816,7 +816,7 @@
             "require-dev": {
                 "phpunit/phpunit": "^7",
                 "symfony/dependency-injection": "^v4.2",
-                "vimeo/psalm": "^3"
+                "vimeo/psalm": "dev-master"
             },
             "type": "library",
             "autoload": {
@@ -843,11 +843,9 @@
             "keywords": [
                 "async-php",
                 "command-bus",
-                "cqrs",
-                "event-sourcing",
                 "messaging"
             ],
-            "time": "2019-01-23 07:25:30"
+            "time": "2019-01-31 15:29:38"
         },
         {
             "name": "php-service-bus/transport-amqp",
@@ -855,12 +853,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-service-bus/transport-amqp.git",
-                "reference": "6db554cd211d29b086773acc9637bfbae2ee96eb"
+                "reference": "967cc8e3f9a1e64b602ac03fd5b9dbfddacfe984"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-service-bus/transport-amqp/zipball/6db554cd211d29b086773acc9637bfbae2ee96eb",
-                "reference": "6db554cd211d29b086773acc9637bfbae2ee96eb",
+                "url": "https://api.github.com/repos/php-service-bus/transport-amqp/zipball/967cc8e3f9a1e64b602ac03fd5b9dbfddacfe984",
+                "reference": "967cc8e3f9a1e64b602ac03fd5b9dbfddacfe984",
                 "shasum": ""
             },
             "require": {
@@ -870,7 +868,7 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "^7",
-                "vimeo/psalm": "^3"
+                "vimeo/psalm": "dev-master"
             },
             "type": "library",
             "autoload": {
@@ -890,15 +888,14 @@
                     "role": "Developer"
                 }
             ],
-            "description": "PHP Service Bus amqp common implementation",
+            "description": "AMQP transport common implementation",
             "keywords": [
+                "AMQP",
                 "async-php",
                 "command-bus",
-                "cqrs",
-                "event-sourcing",
                 "messaging"
             ],
-            "time": "2019-01-23 15:00:43"
+            "time": "2019-01-31 15:51:55"
         },
         {
             "name": "php-service-bus/transport-common",
@@ -906,12 +903,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-service-bus/transport-common.git",
-                "reference": "68946e0edc1da0111e6e4fad9ac656382573accc"
+                "reference": "436b66e419471823bc1fdeada1ce25e78ae0a0e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-service-bus/transport-common/zipball/68946e0edc1da0111e6e4fad9ac656382573accc",
-                "reference": "68946e0edc1da0111e6e4fad9ac656382573accc",
+                "url": "https://api.github.com/repos/php-service-bus/transport-common/zipball/436b66e419471823bc1fdeada1ce25e78ae0a0e4",
+                "reference": "436b66e419471823bc1fdeada1ce25e78ae0a0e4",
                 "shasum": ""
             },
             "require": {
@@ -920,7 +917,7 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "^7",
-                "vimeo/psalm": "^3"
+                "vimeo/psalm": "dev-master"
             },
             "type": "library",
             "autoload": {
@@ -940,15 +937,13 @@
                     "role": "Developer"
                 }
             ],
-            "description": "PHP Service Bus transport common parts",
+            "description": "Common transport implementation interfaces",
             "keywords": [
                 "async-php",
                 "command-bus",
-                "cqrs",
-                "event-sourcing",
                 "messaging"
             ],
-            "time": "2019-01-23 14:44:11"
+            "time": "2019-01-31 15:47:40"
         },
         {
             "name": "phpinnacle/buffer",
@@ -1205,16 +1200,16 @@
     "packages-dev": [
         {
             "name": "composer/xdebug-handler",
-            "version": "1.3.1",
+            "version": "1.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/xdebug-handler.git",
-                "reference": "dc523135366eb68f22268d069ea7749486458562"
+                "reference": "d17708133b6c276d6e42ef887a877866b909d892"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/dc523135366eb68f22268d069ea7749486458562",
-                "reference": "dc523135366eb68f22268d069ea7749486458562",
+                "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/d17708133b6c276d6e42ef887a877866b909d892",
+                "reference": "d17708133b6c276d6e42ef887a877866b909d892",
                 "shasum": ""
             },
             "require": {
@@ -1245,7 +1240,7 @@
                 "Xdebug",
                 "performance"
             ],
-            "time": "2018-11-29 10:59:02"
+            "time": "2019-01-28 20:25:53"
         },
         {
             "name": "doctrine/instantiator",
@@ -2613,16 +2608,16 @@
         },
         {
             "name": "sebastian/environment",
-            "version": "4.0.1",
+            "version": "4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "febd209a219cea7b56ad799b30ebbea34b71eb8f"
+                "reference": "4a43e9af57b4afa663077b9bc85255dbc6e8a2bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/febd209a219cea7b56ad799b30ebbea34b71eb8f",
-                "reference": "febd209a219cea7b56ad799b30ebbea34b71eb8f",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/4a43e9af57b4afa663077b9bc85255dbc6e8a2bd",
+                "reference": "4a43e9af57b4afa663077b9bc85255dbc6e8a2bd",
                 "shasum": ""
             },
             "require": {
@@ -2659,7 +2654,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2018-11-25 09:31:21"
+            "time": "2019-01-28 15:26:03"
         },
         {
             "name": "sebastian/exporter",
@@ -3247,16 +3242,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "3.0.12",
+            "version": "3.0.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "279912cb5566c4b5394af9ac4f8cbd8c9a2b9450"
+                "reference": "0bb5143efd2350bcbb01f06f5374a4c6cf5a7a4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/279912cb5566c4b5394af9ac4f8cbd8c9a2b9450",
-                "reference": "279912cb5566c4b5394af9ac4f8cbd8c9a2b9450",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/0bb5143efd2350bcbb01f06f5374a4c6cf5a7a4b",
+                "reference": "0bb5143efd2350bcbb01f06f5374a4c6cf5a7a4b",
                 "shasum": ""
             },
             "require": {
@@ -3320,7 +3315,7 @@
                 "inspection",
                 "php"
             ],
-            "time": "2019-01-20 17:50:47"
+            "time": "2019-01-29 15:34:31"
         },
         {
             "name": "webmozart/assert",

@@ -4,5 +4,4 @@
 
 ## What is it?
 
-Implementing RabbitMQ (via [phpinnacle/ridge](https://github.com/phpinnacle/ridge)) for use in [service-bus](https://github.com/php-service-bus/service-bus) framework
-
+Adapter for working with RabbitMq (via [phpinnacle/ridge](https://github.com/phpinnacle/ridge))

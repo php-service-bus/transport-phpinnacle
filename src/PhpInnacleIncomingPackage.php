@@ -1,7 +1,7 @@
 <?php
 
 /**
- * phpinnacle transport bridge for PHP Service Bus
+ * phpinnacle RabbitMQ adapter
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -110,7 +110,10 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
      */
     public function headers(): array
     {
-        return $this->originMessage->headers();
+        /** @var array<string, string|int|float> $headers */
+        $headers =  $this->originMessage->headers();
+
+        return $headers;
     }
 
     /**
@@ -124,6 +127,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
             {
                 try
                 {
+                    /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
                     yield $this->channel->ack($this->originMessage);
                 }
                 catch(\Throwable $throwable)
@@ -145,6 +149,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
             {
                 try
                 {
+                    /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
                     yield $this->channel->nack($this->originMessage, false, $requeue);
                 }
                 catch(\Throwable $throwable)
@@ -167,6 +172,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
             {
                 try
                 {
+                    /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
                     yield $this->channel->reject($this->originMessage, $requeue);
                 }
                 catch(\Throwable $throwable)

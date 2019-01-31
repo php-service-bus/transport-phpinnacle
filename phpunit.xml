@@ -15,21 +15,23 @@
     </php>
 
     <testsuites>
-        <testsuite name="phpinnacle amqp transport bridge">
-            <directory>./tests/</directory>
-        </testsuite>
 
-        <testsuite name="Service Bus common">
+        <testsuite name="PHP Service Bus common component">
             <directory>./vendor/php-service-bus/common/tests/</directory>
         </testsuite>
 
-        <testsuite name="Service bus transport common">
+        <testsuite name="Common transport implementation interfaces">
             <directory>./vendor/php-service-bus/transport-common/tests/</directory>
         </testsuite>
 
-        <testsuite name="Service Bus common amqp">
+        <testsuite name="AMQP transport common implementation">
             <directory>./vendor/php-service-bus/transport-amqp/tests/</directory>
         </testsuite>
+
+        <testsuite name="phpinnacle RabbitMQ adapter">
+            <directory>./tests/</directory>
+        </testsuite>
+
     </testsuites>
 
     <filter>
