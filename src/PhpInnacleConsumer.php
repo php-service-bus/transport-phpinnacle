@@ -94,7 +94,10 @@ final class PhpInnacleConsumer
      */
     public function stop(): Promise
     {
-        /** @psalm-suppress InvalidArgument Incorrect psalm unpack parameters (...$args) */
+        /**
+         * @psalm-suppress MixedTypeCoercion
+         * @psalm-suppress InvalidArgument
+         */
         return call(
             function(): \Generator
             {
@@ -134,7 +137,7 @@ final class PhpInnacleConsumer
                     'rawMessageHeaders' => $incomingPackage->headers()
                 ]);
 
-                /** @psalm-suppress InvalidArgument Incorrect psalm unpack parameters (...$args) */
+                /** @psalm-suppress InvalidArgument */
                 asyncCall($onMessageReceived, $incomingPackage);
 
                 unset($incomingPackage);

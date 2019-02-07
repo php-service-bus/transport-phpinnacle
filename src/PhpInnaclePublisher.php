@@ -55,7 +55,7 @@ final class PhpInnaclePublisher
      */
     public function process(OutboundPackage $outboundPackage): Promise
     {
-        /** @psalm-suppress InvalidArgument Incorrect psalm unpack parameters (...$args) */
+        /** @psalm-suppress InvalidArgument */
         return call(
             function(OutboundPackage $outboundPackage): \Generator
             {
@@ -93,8 +93,6 @@ final class PhpInnaclePublisher
                     $outboundPackage->mandatoryFlag,
                     $outboundPackage->immediateFlag
                 );
-
-                unset($destination, $headers);
             },
             $outboundPackage
         );

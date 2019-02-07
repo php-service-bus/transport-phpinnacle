@@ -92,7 +92,10 @@ final class PhpInnacleTransport implements Transport
      */
     public function connect(): Promise
     {
-        /** @psalm-suppress InvalidArgument Incorrect psalm unpack parameters (...$args) */
+        /**
+         * @psalm-suppress MixedTypeCoercion
+         * @psalm-suppress InvalidArgument
+         */
         return call(
             function(): \Generator
             {
@@ -114,8 +117,6 @@ final class PhpInnacleTransport implements Transport
 
                     $this->channel = $channel;
 
-                    unset($channel);
-
                     $this->logger->info('Connected to broker');
                 }
                 catch(\Throwable $throwable)
@@ -131,7 +132,10 @@ final class PhpInnacleTransport implements Transport
      */
     public function disconnect(): Promise
     {
-        /** @psalm-suppress InvalidArgument Incorrect psalm unpack parameters (...$args) */
+        /**
+         * @psalm-suppress MixedTypeCoercion
+         * @psalm-suppress InvalidArgument
+         */
         return call(
             function(): \Generator
             {
@@ -160,7 +164,7 @@ final class PhpInnacleTransport implements Transport
     {
         /** @var AmqpQueue $queue */
 
-        /** @psalm-suppress InvalidArgument Incorrect psalm unpack parameters (...$args) */
+        /** @psalm-suppress InvalidArgument */
         return call(
             function(AmqpQueue $queue): \Generator
             {
@@ -180,8 +184,6 @@ final class PhpInnacleTransport implements Transport
 
                 $this->consumers[(string) $queue] = $consumer;
 
-                unset($consumer, $channel);
-
                 return $emitter->iterate();
             },
             $queue
@@ -193,7 +195,7 @@ final class PhpInnacleTransport implements Transport
      */
     public function stop(Queue $queue): Promise
     {
-        /** @psalm-suppress InvalidArgument Incorrect psalm unpack parameters (...$args) */
+        /** @psalm-suppress InvalidArgument */
         return call(
             function(Queue $queue): \Generator
             {
@@ -206,7 +208,7 @@ final class PhpInnacleTransport implements Transport
 
                     yield $consumer->stop();
 
-                    unset($consumer, $this->consumers[$queueName]);
+                    unset($this->consumers[$queueName]);
                 }
             }
         );
@@ -217,7 +219,7 @@ final class PhpInnacleTransport implements Transport
      */
     public function send(OutboundPackage $outboundPackage): Promise
     {
-        /** @psalm-suppress InvalidArgument Incorrect psalm unpack parameters (...$args) */
+        /** @psalm-suppress InvalidArgument */
         return call(
             function(OutboundPackage $outboundPackage): \Generator
             {
@@ -244,7 +246,7 @@ final class PhpInnacleTransport implements Transport
     {
         /** @var AmqpExchange $topic */
 
-        /** @psalm-suppress InvalidArgument Incorrect psalm unpack parameters (...$args) */
+        /** @psalm-suppress InvalidArgument */
         return call(
             function(AmqpExchange $exchange, array $binds): \Generator
             {
@@ -259,8 +261,6 @@ final class PhpInnacleTransport implements Transport
 
                 yield from $configurator->doCreateExchange($exchange);
                 yield from $configurator->doBindExchange($exchange, $binds);
-
-                unset($channel, $configurator);
             },
             $topic, $binds
         );
@@ -273,7 +273,7 @@ final class PhpInnacleTransport implements Transport
     {
         /** @var AmqpQueue $queue */
 
-        /** @psalm-suppress InvalidArgument Incorrect psalm unpack parameters (...$args) */
+        /** @psalm-suppress InvalidArgument */
         return call(
             function(AmqpQueue $queue, array $binds): \Generator
             {
@@ -288,8 +288,6 @@ final class PhpInnacleTransport implements Transport
 
                 yield from $configurator->doCreateQueue($queue);
                 yield from $configurator->doBindQueue($queue, $binds);
-
-                unset($channel, $configurator);
             },
             $queue, $binds
         );

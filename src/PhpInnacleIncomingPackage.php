@@ -121,7 +121,10 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
      */
     public function ack(): Promise
     {
-        /** @psalm-suppress InvalidArgument Incorrect psalm unpack parameters (...$args) */
+        /**
+         * @psalm-suppress MixedTypeCoercion
+         * @psalm-suppress InvalidArgument
+         */
         return call(
             function(): \Generator
             {
@@ -143,7 +146,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
      */
     public function nack(bool $requeue, ?string $withReason = null): Promise
     {
-        /** @psalm-suppress InvalidArgument Incorrect psalm unpack parameters (...$args) */
+        /** @psalm-suppress InvalidArgument */
         return call(
             function(bool $requeue): \Generator
             {
@@ -166,7 +169,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
      */
     public function reject(bool $requeue, ?string $withReason = null): Promise
     {
-        /** @psalm-suppress InvalidArgument Incorrect psalm unpack parameters (...$args) */
+        /** @psalm-suppress InvalidArgument */
         return call(
             function(bool $requeue): \Generator
             {
