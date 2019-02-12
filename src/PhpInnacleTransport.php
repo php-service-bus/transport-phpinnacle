@@ -210,7 +210,8 @@ final class PhpInnacleTransport implements Transport
 
                     unset($this->consumers[$queueName]);
                 }
-            }
+            },
+            $queue
         );
     }
 
