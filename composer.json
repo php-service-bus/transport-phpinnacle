@@ -38,7 +38,7 @@
     "phpinnacle/ridge": "^0.1"
   },
   "require-dev": {
-    "phpunit/phpunit": "^7",
+    "phpunit/phpunit": "^8",
     "vimeo/psalm": "^v3"
   },
   "prefer-stable": true,
