@@ -13,6 +13,8 @@ declare(strict_types = 1);
 namespace ServiceBus\Transport\PhpInnacle;
 
 use PHPinnacle\Ridge\Channel;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use ServiceBus\Transport\Amqp\AmqpExchange;
 use ServiceBus\Transport\Amqp\AmqpQueue;
 use ServiceBus\Transport\Common\Exceptions\BindFailed;
@@ -32,11 +34,18 @@ final class PhpInnacleConfigurator
     private $channel;
 
     /**
-     * @param Channel $channel
+     * @var LoggerInterface
      */
-    public function __construct(Channel $channel)
+    private $logger;
+
+    /**
+     * @param Channel              $channel
+     * @param LoggerInterface|null $logger
+     */
+    public function __construct(Channel $channel, ?LoggerInterface $logger = null)
     {
         $this->channel = $channel;
+        $this->logger  = $logger ?? new NullLogger();
     }
 
     /**
@@ -57,6 +66,10 @@ final class PhpInnacleConfigurator
                 (string) $queue, $queue->isPassive(), $queue->isDurable(), $queue->isExclusive(),
                 $queue->autoDeleteEnabled(), false, $queue->arguments()
             );
+
+            $this->logger->info('Created "{queueName}" queue', [
+                'queueName' => (string) $queue
+            ]);
         }
         catch(\Throwable $throwable)
         {
@@ -89,6 +102,14 @@ final class PhpInnacleConfigurator
 
                 /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
                 yield $this->channel->queueBind((string) $queue, (string) $destinationExchange, (string) $bind->routingKey);
+
+                $this->logger->info(
+                    'The queue "{queueName}" was tied to the exchange "{exchangeName}" with the routing key "{routingKey}"', [
+                        'queueName'    => (string) $queue,
+                        'exchangeName' => (string) $destinationExchange,
+                        'routingKey'   => (string) $bind->routingKey
+                    ]
+                );
             }
         }
         catch(\Throwable $throwable)
@@ -115,6 +136,10 @@ final class PhpInnacleConfigurator
                 (string) $exchange, $exchange->type(), $exchange->isPassive(), $exchange->isDurable(),
                 false, false, false, $exchange->arguments()
             );
+
+            $this->logger->info('Created "{exchangeName}" exchange', [
+                'exchangeName' => (string) $exchange
+            ]);
         }
         catch(\Throwable $throwable)
         {
@@ -147,6 +172,14 @@ final class PhpInnacleConfigurator
 
                 /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
                 yield $this->channel->exchangeBind((string) $sourceExchange, (string) $exchange, (string) $bind->routingKey);
+
+                $this->logger->info(
+                    'The exchange "{exchangeName}" was tied to the exchange "{destinationExchangeName}" with the routing key "{routingKey}"', [
+                        'queueName'               => (string) $sourceExchange,
+                        'destinationExchangeName' => (string) $exchange,
+                        'routingKey'              => (string) $bind->routingKey
+                    ]
+                );
             }
         }
         catch(\Throwable $throwable)

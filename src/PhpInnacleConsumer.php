@@ -74,16 +74,15 @@ final class PhpInnacleConsumer
     public function listen(callable $onMessageReceived): Promise
     {
         $queueName = (string) $this->queue;
-        $logger    = $this->logger;
 
-        $logger->info('Creates new consumer on channel for queue "{queue}" with tag "{consumerTag}"', [
+        $this->logger->info('Creates new consumer on channel for queue "{queue}" with tag "{consumerTag}"', [
             'queue'       => $queueName,
             'consumerTag' => $this->tag
         ]);
 
         /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
         return $this->channel->consume(
-            self::createMessageHandler($logger, $onMessageReceived), $queueName, (string) $this->tag
+            $this->createMessageHandler($onMessageReceived), $queueName, (string) $this->tag
         );
     }
 
@@ -117,20 +116,19 @@ final class PhpInnacleConsumer
     /**
      * Create listener callback
      *
-     * @param LoggerInterface $logger
      * @param callable(PhpInnacleIncomingPackage):\Generator $onMessageReceived
      *
      * @return callable(Message, Channel):void
      */
-    private static function createMessageHandler(LoggerInterface $logger, $onMessageReceived): callable
+    private function createMessageHandler($onMessageReceived): callable
     {
-        return static function(Message $message, Channel $channel) use ($logger, $onMessageReceived): void
+        return function(Message $message, Channel $channel) use ($onMessageReceived): void
         {
             try
             {
                 $incomingPackage = PhpInnacleIncomingPackage::received($message, $channel);
 
-                $logger->debug('New message received', [
+                $this->logger->debug('New message received', [
                     'packageId'         => $incomingPackage->id(),
                     'traceId'           => $incomingPackage->traceId(),
                     'rawMessagePayload' => $incomingPackage->payload(),
@@ -144,7 +142,7 @@ final class PhpInnacleConsumer
             }
             catch(\Throwable $throwable)
             {
-                $logger->error('Error occurred: {throwableMessage}', [
+                $this->logger->error('Error occurred: {throwableMessage}', [
                         'throwableMessage'  => $throwable->getMessage(),
                         'throwablePoint'    => \sprintf('%s:%d', $throwable->getFile(), $throwable->getLine()),
                         'rawMessagePayload' => $message->content()

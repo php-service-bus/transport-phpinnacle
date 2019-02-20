@@ -71,6 +71,13 @@ final class PhpInnacleTransport implements Transport
     private $consumers = [];
 
     /**
+     * AMQP configuration
+     *
+     * @var Config
+     */
+    private $config;
+
+    /**
      * @param AmqpConnectionConfiguration $connectionConfig
      * @param AmqpQoSConfiguration|null   $qosConfig
      * @param LoggerInterface|null        $logger
@@ -84,7 +91,9 @@ final class PhpInnacleTransport implements Transport
         $qosConfig = $qosConfig ?? new AmqpQoSConfiguration();
 
         $this->logger = $logger ?? new NullLogger();
-        $this->client = new Client($this->adaptConfig($connectionConfig, $qosConfig));
+        $this->config = $this->adaptConfig($connectionConfig, $qosConfig);
+
+        $this->client = new Client($this->config);
     }
 
     /**
@@ -117,7 +126,11 @@ final class PhpInnacleTransport implements Transport
 
                     $this->channel = $channel;
 
-                    $this->logger->info('Connected to broker');
+                    $this->logger->info('Connected to broker', [
+                        'host'  => $this->config->host(),
+                        'port'  => $this->config->port(),
+                        'vhost' => $this->config->vhost()
+                    ]);
                 }
                 catch(\Throwable $throwable)
                 {
@@ -151,6 +164,12 @@ final class PhpInnacleTransport implements Transport
                 {
                     /** Not interested */
                 }
+
+                $this->logger->info('Disconnect from broker', [
+                    'host'  => $this->config->host(),
+                    'port'  => $this->config->port(),
+                    'vhost' => $this->config->vhost()
+                ]);
             }
         );
     }
@@ -168,7 +187,16 @@ final class PhpInnacleTransport implements Transport
         return call(
             function(AmqpQueue $queue): \Generator
             {
+                $queueName = (string) $queue;
+
                 yield $this->connect();
+
+                $this->logger->info('Starting a subscription to the "{queueName}" queue', [
+                    'host'      => $this->config->host(),
+                    'port'      => $this->config->port(),
+                    'vhost'     => $this->config->vhost(),
+                    'queueName' => $queueName
+                ]);
 
                 /** @var Channel $channel */
                 $channel  = $this->channel;
@@ -176,13 +204,23 @@ final class PhpInnacleTransport implements Transport
                 $consumer = new PhpInnacleConsumer($queue, $channel, $this->logger);
 
                 $consumer->listen(
-                    static function(PhpInnacleIncomingPackage $incomingPackage) use ($emitter): \Generator
+                    function(PhpInnacleIncomingPackage $incomingPackage) use ($emitter): \Generator
                     {
-                        yield $emitter->emit($incomingPackage);
+                        try
+                        {
+                            yield $emitter->emit($incomingPackage);
+                        }
+                        catch(\Throwable $throwable)
+                        {
+                            $this->logger->error('Emit package failed: {throwableMessage} ', [
+                                'throwableMessage' => $throwable->getMessage(),
+                                'throwablePoint'   => \sprintf('%s:%d', $throwable->getFile(), $throwable->getLine())
+                            ]);
+                        }
                     }
                 );
 
-                $this->consumers[(string) $queue] = $consumer;
+                $this->consumers[$queueName] = $consumer;
 
                 return $emitter->iterate();
             },
@@ -200,6 +238,13 @@ final class PhpInnacleTransport implements Transport
             function(Queue $queue): \Generator
             {
                 $queueName = (string) $queue;
+
+                $this->logger->info('Completing the subscription to the "{queueName}" queue', [
+                    'host'      => $this->config->host(),
+                    'port'      => $this->config->port(),
+                    'vhost'     => $this->config->vhost(),
+                    'queueName' => $queueName
+                ]);
 
                 if(true === isset($this->consumers[$queueName]))
                 {
