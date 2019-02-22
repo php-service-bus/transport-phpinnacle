@@ -179,84 +179,91 @@ final class PhpInnacleTransport implements Transport
      *
      * @inheritDoc
      */
-    public function consume(Queue $queue): Promise
+    public function consume(Queue ...$queues): Promise
     {
-        /** @var AmqpQueue $queue */
-
         /** @psalm-suppress InvalidArgument */
         return call(
-            function(AmqpQueue $queue): \Generator
+            function(array $queues): \Generator
             {
-                $queueName = (string) $queue;
-
                 yield $this->connect();
 
-                $this->logger->info('Starting a subscription to the "{queueName}" queue', [
-                    'host'      => $this->config->host(),
-                    'port'      => $this->config->port(),
-                    'vhost'     => $this->config->vhost(),
-                    'queueName' => $queueName
-                ]);
-
                 /** @var Channel $channel */
-                $channel  = $this->channel;
-                $emitter  = new Emitter();
-                $consumer = new PhpInnacleConsumer($queue, $channel, $this->logger);
+                $channel = $this->channel;
+                $emitter = new Emitter();
 
-                $consumer->listen(
-                    function(PhpInnacleIncomingPackage $incomingPackage) use ($emitter): \Generator
-                    {
-                        try
-                        {
-                            yield $emitter->emit($incomingPackage);
-                        }
-                        catch(\Throwable $throwable)
-                        {
-                            $this->logger->error('Emit package failed: {throwableMessage} ', [
-                                'throwableMessage' => $throwable->getMessage(),
-                                'throwablePoint'   => \sprintf('%s:%d', $throwable->getFile(), $throwable->getLine())
-                            ]);
-                        }
-                    }
-                );
+                /** @var AmqpQueue $queue */
+                foreach($queues as $queue)
+                {
+                    $queueName = (string) $queue;
 
-                $this->consumers[$queueName] = $consumer;
+                    $this->logger->info('Starting a subscription to the "{queueName}" queue', [
+                        'host'      => $this->config->host(),
+                        'port'      => $this->config->port(),
+                        'vhost'     => $this->config->vhost(),
+                        'queueName' => $queueName
+                    ]);
+
+                    $consumer = new PhpInnacleConsumer($queue, $channel, $this->logger);
+                    $consumer->listen(
+                        function(PhpInnacleIncomingPackage $incomingPackage) use ($emitter): \Generator
+                        {
+                            try
+                            {
+                                yield $emitter->emit($incomingPackage);
+                            }
+                            catch(\Throwable $throwable)
+                            {
+                                $this->logger->error('Emit package failed: {throwableMessage} ', [
+                                    'throwableMessage' => $throwable->getMessage(),
+                                    'throwablePoint'   => \sprintf('%s:%d', $throwable->getFile(), $throwable->getLine())
+                                ]);
+                            }
+                        }
+                    );
+
+                    $this->consumers[$queueName] = $consumer;
+                }
 
                 return $emitter->iterate();
             },
-            $queue
+            $queues
         );
     }
 
     /**
      * @inheritDoc
      */
-    public function stop(Queue $queue): Promise
+    public function stop(): Promise
     {
         /** @psalm-suppress InvalidArgument */
         return call(
-            function(Queue $queue): \Generator
+            function(array $consumers): \Generator
             {
-                $queueName = (string) $queue;
-
-                $this->logger->info('Completing the subscription to the "{queueName}" queue', [
-                    'host'      => $this->config->host(),
-                    'port'      => $this->config->port(),
-                    'vhost'     => $this->config->vhost(),
-                    'queueName' => $queueName
-                ]);
-
-                if(true === isset($this->consumers[$queueName]))
+                /**
+                 * @var string             $queueName
+                 * @var PhpInnacleConsumer $consumer
+                 */
+                foreach($consumers as $queueName => $consumer)
                 {
-                    /** @var PhpInnacleConsumer $consumer */
-                    $consumer = $this->consumers[$queueName];
+                    $this->logger->info('Completing the subscription to the "{queueName}" queue', [
+                        'host'      => $this->config->host(),
+                        'port'      => $this->config->port(),
+                        'vhost'     => $this->config->vhost(),
+                        'queueName' => $queueName
+                    ]);
 
-                    yield $consumer->stop();
+                    if(true === isset($this->consumers[$queueName]))
+                    {
+                        /** @var PhpInnacleConsumer $consumer */
+                        $consumer = $this->consumers[$queueName];
 
-                    unset($this->consumers[$queueName]);
+                        yield $consumer->stop();
+
+                        unset($this->consumers[$queueName]);
+                    }
                 }
             },
-            $queue
+            $this->consumers
         );
     }
 
