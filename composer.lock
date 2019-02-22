@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4c29afab5d29f6bd5468aaf7df949493",
-    "content-hash": "543788f589c993cff6ce4b1c202b59cc",
+    "hash": "567010cbc78020a30afbd91254ed7434",
+    "content-hash": "0a6b9adb834970dbf874821e70036b0a",
     "packages": [
         {
             "name": "amphp/amp",
@@ -609,16 +609,16 @@
         },
         {
             "name": "php-service-bus/common",
-            "version": "v3.0.0",
+            "version": "v3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-service-bus/common.git",
-                "reference": "4832b5b1cf702eac55edddfdb62325aa20d5ba11"
+                "reference": "71e9167bdec0e245cc77bc7fbb37c250481693ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-service-bus/common/zipball/4832b5b1cf702eac55edddfdb62325aa20d5ba11",
-                "reference": "4832b5b1cf702eac55edddfdb62325aa20d5ba11",
+                "url": "https://api.github.com/repos/php-service-bus/common/zipball/71e9167bdec0e245cc77bc7fbb37c250481693ef",
+                "reference": "71e9167bdec0e245cc77bc7fbb37c250481693ef",
                 "shasum": ""
             },
             "require": {
@@ -627,7 +627,7 @@
                 "ramsey/uuid": "^3.7"
             },
             "require-dev": {
-                "phpunit/phpunit": "^7",
+                "phpunit/phpunit": "^8",
                 "symfony/dependency-injection": "^v4.2",
                 "vimeo/psalm": "^3"
             },
@@ -658,7 +658,7 @@
                 "command-bus",
                 "messaging"
             ],
-            "time": "2019-02-07 11:11:38"
+            "time": "2019-02-15 09:15:23"
         },
         {
             "name": "php-service-bus/transport-amqp",
