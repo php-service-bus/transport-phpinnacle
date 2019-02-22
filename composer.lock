@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "567010cbc78020a30afbd91254ed7434",
-    "content-hash": "0a6b9adb834970dbf874821e70036b0a",
+    "hash": "07c7b5477f2edbc1851c65260d54a37c",
+    "content-hash": "f7057017604344d2ff16c4e867ce7d6e",
     "packages": [
         {
             "name": "amphp/amp",
@@ -662,22 +662,22 @@
         },
         {
             "name": "php-service-bus/transport-amqp",
-            "version": "v3.0.x-dev",
+            "version": "v3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-service-bus/transport-amqp.git",
-                "reference": "778668e8735390a9104bc5beebf814ccd0111570"
+                "reference": "287d877d3ad52044e88ba8e69c509095050d3460"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-service-bus/transport-amqp/zipball/778668e8735390a9104bc5beebf814ccd0111570",
-                "reference": "778668e8735390a9104bc5beebf814ccd0111570",
+                "url": "https://api.github.com/repos/php-service-bus/transport-amqp/zipball/287d877d3ad52044e88ba8e69c509095050d3460",
+                "reference": "287d877d3ad52044e88ba8e69c509095050d3460",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.2",
                 "php-service-bus/common": "^v3.0",
-                "php-service-bus/transport-common": "v3.0.x-dev"
+                "php-service-bus/transport-common": "^v3.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^8",
@@ -708,11 +708,11 @@
                 "command-bus",
                 "messaging"
             ],
-            "time": "2019-02-22 10:39:41"
+            "time": "2019-02-22 17:13:15"
         },
         {
             "name": "php-service-bus/transport-common",
-            "version": "v3.0.x-dev",
+            "version": "v3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-service-bus/transport-common.git",
@@ -815,23 +815,23 @@
         },
         {
             "name": "phpinnacle/ridge",
-            "version": "0.1.2",
+            "version": "0.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpinnacle/ridge.git",
-                "reference": "be77a866901077cf40d46ea97eade99f81695cff"
+                "reference": "c40d256cc7ee82c7fed27d00bfdb949958f55f32"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpinnacle/ridge/zipball/be77a866901077cf40d46ea97eade99f81695cff",
-                "reference": "be77a866901077cf40d46ea97eade99f81695cff",
+                "url": "https://api.github.com/repos/phpinnacle/ridge/zipball/c40d256cc7ee82c7fed27d00bfdb949958f55f32",
+                "reference": "c40d256cc7ee82c7fed27d00bfdb949958f55f32",
                 "shasum": ""
             },
             "require": {
                 "amphp/amp": "^2.0",
                 "amphp/socket": "^0.10.11",
                 "php": "^7.2",
-                "phpinnacle/buffer": "^0.1.1"
+                "phpinnacle/buffer": "^0.1.2"
             },
             "require-dev": {
                 "amphp/phpunit-util": "^1.0",
@@ -867,7 +867,7 @@
                 "async",
                 "phpinnacle"
             ],
-            "time": "2019-01-18 13:36:33"
+            "time": "2019-02-22 16:51:55"
         },
         {
             "name": "ramsey/uuid",
@@ -3225,9 +3225,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "php-service-bus/transport-amqp": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
