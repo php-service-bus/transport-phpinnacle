@@ -367,12 +367,11 @@ final class PhpInnacleTransport implements Transport
             $connectionConfiguration->password()
         );
 
-        if(0 < $connectionConfiguration->timeout())
-        {
-            $config->timeout(
-                (int) ($connectionConfiguration->timeout() * 1000)
-            );
-        }
+        $timeout = 0 < $connectionConfiguration->timeout()
+            ? (int) $connectionConfiguration->timeout()
+            : 1;
+
+        $config->timeout($timeout);
 
         $config->heartbeat((int) $connectionConfiguration->heartbeatInterval());
         $config->qosCount($qoSConfiguration->count);
