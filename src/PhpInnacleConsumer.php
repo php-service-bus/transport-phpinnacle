@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpUnhandledExceptionInspection */
 
 /**
  * phpinnacle RabbitMQ adapter
@@ -51,13 +51,16 @@ final class PhpInnacleConsumer
     private $tag;
 
     /**
+     * @noinspection PhpDocMissingThrowsInspection
+     *
      * @param AmqpQueue            $queue
      * @param Channel              $channel
      * @param LoggerInterface|null $logger
      */
     public function __construct(AmqpQueue $queue, Channel $channel, ?LoggerInterface $logger = null)
     {
-        $this->tag = \sha1((string) \microtime(true));
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $this->tag = \sha1((string) \random_bytes(16));
 
         $this->queue   = $queue;
         $this->channel = $channel;
@@ -82,7 +85,13 @@ final class PhpInnacleConsumer
 
         /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
         return $this->channel->consume(
-            $this->createMessageHandler($onMessageReceived), $queueName, (string) $this->tag
+            $this->createMessageHandler($onMessageReceived),
+            $queueName,
+            (string) $this->tag,
+            false,
+            false,
+            false,
+            true
         );
     }
 
@@ -128,7 +137,8 @@ final class PhpInnacleConsumer
             {
                 $incomingPackage = PhpInnacleIncomingPackage::received($message, $channel);
 
-                $this->logger->debug('New message received', [
+                $this->logger->debug('New message received from "{queueName}"', [
+                    'queueName'         => (string) $this->queue,
                     'packageId'         => $incomingPackage->id(),
                     'traceId'           => $incomingPackage->traceId(),
                     'rawMessagePayload' => $incomingPackage->payload(),
