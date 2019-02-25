@@ -147,7 +147,7 @@ final class PhpInnacleTransportTest extends TestCase
     {
         wait(
             $this->transport->createQueue(
-                new AmqpQueue('createQueue'),
+                AmqpQueue::default('createQueue'),
                 QueueBind::create(
                     AmqpExchange::topic('createExchange2'),
                     'qwerty'
@@ -168,7 +168,7 @@ final class PhpInnacleTransportTest extends TestCase
     public function consume(): void
     {
         $exchange = AmqpExchange::direct('consume');
-        $queue    = new AmqpQueue('consume.messages');
+        $queue    = AmqpQueue::default('consume.messages');
 
         wait($this->transport->createTopic($exchange));
         wait($this->transport->createQueue($queue, QueueBind::create($exchange, 'consume')));

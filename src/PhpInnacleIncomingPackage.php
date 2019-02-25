@@ -91,6 +91,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
      */
     public function origin(): DeliveryDestination
     {
+        /** @noinspection PhpUnhandledExceptionInspection */
         return new AmqpTransportLevelDestination(
             $this->originMessage->exchange(),
             $this->originMessage->routingKey()

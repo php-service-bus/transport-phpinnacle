@@ -61,19 +61,17 @@ final class PhpInnacleConfigurator
     {
         try
         {
+            $this->logger->info('Creating "{queueName}" queue', ['queueName' => (string) $queue]);
+
             /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
             yield $this->channel->queueDeclare(
                 (string) $queue, $queue->isPassive(), $queue->isDurable(), $queue->isExclusive(),
                 $queue->autoDeleteEnabled(), false, $queue->arguments()
             );
-
-            $this->logger->info('Created "{queueName}" queue', [
-                'queueName' => (string) $queue
-            ]);
         }
         catch(\Throwable $throwable)
         {
-            throw new CreateQueueFailed($throwable->getMessage(), (int) $throwable->getCode(), $throwable);
+            throw CreateQueueFailed::fromThrowable($throwable);
         }
     }
 
@@ -100,21 +98,21 @@ final class PhpInnacleConfigurator
 
                 yield from $this->doCreateExchange($destinationExchange);
 
-                /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
-                yield $this->channel->queueBind((string) $queue, (string) $destinationExchange, (string) $bind->routingKey);
-
                 $this->logger->info(
-                    'The queue "{queueName}" was tied to the exchange "{exchangeName}" with the routing key "{routingKey}"', [
+                    'Linking "{queueName}" queue to the exchange "{exchangeName}" with the routing key "{routingKey}"', [
                         'queueName'    => (string) $queue,
                         'exchangeName' => (string) $destinationExchange,
                         'routingKey'   => (string) $bind->routingKey
                     ]
                 );
+
+                /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
+                yield $this->channel->queueBind((string) $queue, (string) $destinationExchange, (string) $bind->routingKey);
             }
         }
         catch(\Throwable $throwable)
         {
-            throw new BindFailed($throwable->getMessage(), (int) $throwable->getCode(), $throwable);
+            throw BindFailed::fromThrowable($throwable);
         }
     }
 
@@ -131,19 +129,17 @@ final class PhpInnacleConfigurator
     {
         try
         {
+            $this->logger->info('Creating "{exchangeName}" exchange', ['exchangeName' => (string) $exchange]);
+
             /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
             yield $this->channel->exchangeDeclare(
                 (string) $exchange, $exchange->type(), $exchange->isPassive(), $exchange->isDurable(),
                 false, false, false, $exchange->arguments()
             );
-
-            $this->logger->info('Created "{exchangeName}" exchange', [
-                'exchangeName' => (string) $exchange
-            ]);
         }
         catch(\Throwable $throwable)
         {
-            throw new CreateTopicFailed($throwable->getMessage(), (int) $throwable->getCode(), $throwable);
+            throw CreateTopicFailed::fromThrowable($throwable);
         }
     }
 
@@ -170,21 +166,21 @@ final class PhpInnacleConfigurator
 
                 yield from $this->doCreateExchange($sourceExchange);
 
-                /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
-                yield $this->channel->exchangeBind((string) $sourceExchange, (string) $exchange, (string) $bind->routingKey);
-
                 $this->logger->info(
-                    'The exchange "{exchangeName}" was tied to the exchange "{destinationExchangeName}" with the routing key "{routingKey}"', [
+                    'Linking "{exchangeName}" exchange to the exchange "{destinationExchangeName}" with the routing key "{routingKey}"', [
                         'queueName'               => (string) $sourceExchange,
                         'destinationExchangeName' => (string) $exchange,
                         'routingKey'              => (string) $bind->routingKey
                     ]
                 );
+
+                /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
+                yield $this->channel->exchangeBind((string) $sourceExchange, (string) $exchange, (string) $bind->routingKey);
             }
         }
         catch(\Throwable $throwable)
         {
-            throw new BindFailed($throwable->getMessage(), (int) $throwable->getCode(), $throwable);
+            throw BindFailed::fromThrowable($throwable);
         }
     }
 }

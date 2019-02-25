@@ -666,18 +666,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-service-bus/transport-amqp.git",
-                "reference": "287d877d3ad52044e88ba8e69c509095050d3460"
+                "reference": "2c155e36fe82600b298c2a10fa13434c74e62211"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-service-bus/transport-amqp/zipball/287d877d3ad52044e88ba8e69c509095050d3460",
-                "reference": "287d877d3ad52044e88ba8e69c509095050d3460",
+                "url": "https://api.github.com/repos/php-service-bus/transport-amqp/zipball/2c155e36fe82600b298c2a10fa13434c74e62211",
+                "reference": "2c155e36fe82600b298c2a10fa13434c74e62211",
                 "shasum": ""
             },
             "require": {
+                "ext-mbstring": "*",
                 "php": ">=7.2",
-                "php-service-bus/common": "^v3.0",
-                "php-service-bus/transport-common": "^v3.0"
+                "php-service-bus/common": "v3.0.x-dev",
+                "php-service-bus/transport-common": "v3.0.x-dev"
             },
             "require-dev": {
                 "phpunit/phpunit": "^8",
@@ -708,20 +709,20 @@
                 "command-bus",
                 "messaging"
             ],
-            "time": "2019-02-22 17:13:15"
+            "time": "2019-02-25 15:25:17"
         },
         {
             "name": "php-service-bus/transport-common",
-            "version": "v3.0.5",
+            "version": "v3.0.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-service-bus/transport-common.git",
-                "reference": "89c2c7ef4316d1053cf8835e7b083203e7eb28d2"
+                "reference": "43416d2e6e7d1fb869ead415554b29762d2954bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-service-bus/transport-common/zipball/89c2c7ef4316d1053cf8835e7b083203e7eb28d2",
-                "reference": "89c2c7ef4316d1053cf8835e7b083203e7eb28d2",
+                "url": "https://api.github.com/repos/php-service-bus/transport-common/zipball/43416d2e6e7d1fb869ead415554b29762d2954bd",
+                "reference": "43416d2e6e7d1fb869ead415554b29762d2954bd",
                 "shasum": ""
             },
             "require": {
@@ -756,7 +757,7 @@
                 "command-bus",
                 "messaging"
             ],
-            "time": "2019-02-22 10:49:49"
+            "time": "2019-02-25 15:34:26"
         },
         {
             "name": "phpinnacle/buffer",
