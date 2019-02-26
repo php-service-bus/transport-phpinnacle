@@ -33,8 +33,8 @@
   },
   "require": {
     "php": ">=7.2",
-    "php-service-bus/common": "v3.0.x-dev",
-    "php-service-bus/transport-amqp": "v3.0.x-dev",
+    "php-service-bus/common": "v3.0.7",
+    "php-service-bus/transport-amqp": "v3.0.7",
     "phpinnacle/ridge": "^0.1"
   },
   "require-dev": {

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4c82319c8ae5c70f0a2a9557328f6f56",
-    "content-hash": "e6920f873468576bb6744ad89cbee7c0",
+    "hash": "ced5d3177d72d68528e387494eddeca8",
+    "content-hash": "626b3c36eef97cfb87417894a76afb9f",
     "packages": [
         {
             "name": "amphp/amp",
@@ -609,16 +609,16 @@
         },
         {
             "name": "php-service-bus/common",
-            "version": "v3.0.x-dev",
+            "version": "v3.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-service-bus/common.git",
-                "reference": "d3b1b081a08e2656dcdb4ccb242b4e18abe74bdf"
+                "reference": "2290f2e66b7ea0718a7afccdbcc4d7928e001205"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-service-bus/common/zipball/d3b1b081a08e2656dcdb4ccb242b4e18abe74bdf",
-                "reference": "d3b1b081a08e2656dcdb4ccb242b4e18abe74bdf",
+                "url": "https://api.github.com/repos/php-service-bus/common/zipball/2290f2e66b7ea0718a7afccdbcc4d7928e001205",
+                "reference": "2290f2e66b7ea0718a7afccdbcc4d7928e001205",
                 "shasum": ""
             },
             "require": {
@@ -658,27 +658,27 @@
                 "command-bus",
                 "messaging"
             ],
-            "time": "2019-02-26 07:22:23"
+            "time": "2019-02-26 13:01:39"
         },
         {
             "name": "php-service-bus/transport-amqp",
-            "version": "v3.0.x-dev",
+            "version": "v3.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-service-bus/transport-amqp.git",
-                "reference": "993b2bc3814eb4634862a39281583c1d486e3624"
+                "reference": "e17771fa8fb71ac594d023d7c78dbd3124317eb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-service-bus/transport-amqp/zipball/993b2bc3814eb4634862a39281583c1d486e3624",
-                "reference": "993b2bc3814eb4634862a39281583c1d486e3624",
+                "url": "https://api.github.com/repos/php-service-bus/transport-amqp/zipball/e17771fa8fb71ac594d023d7c78dbd3124317eb2",
+                "reference": "e17771fa8fb71ac594d023d7c78dbd3124317eb2",
                 "shasum": ""
             },
             "require": {
                 "ext-mbstring": "*",
                 "php": ">=7.2",
-                "php-service-bus/common": "v3.0.x-dev",
-                "php-service-bus/transport-common": "v3.0.x-dev"
+                "php-service-bus/common": "v3.0.7",
+                "php-service-bus/transport-common": "v3.0.7"
             },
             "require-dev": {
                 "phpunit/phpunit": "^8",
@@ -709,11 +709,11 @@
                 "command-bus",
                 "messaging"
             ],
-            "time": "2019-02-26 07:39:15"
+            "time": "2019-02-26 13:15:05"
         },
         {
             "name": "php-service-bus/transport-common",
-            "version": "v3.0.x-dev",
+            "version": "v3.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-service-bus/transport-common.git",
@@ -3226,10 +3226,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "php-service-bus/common": 20,
-        "php-service-bus/transport-amqp": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
