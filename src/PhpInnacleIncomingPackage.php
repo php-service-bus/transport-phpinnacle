@@ -111,8 +111,11 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
      */
     public function headers(): array
     {
-        /** @var array<string, string|int|float> $headers */
-        $headers =  $this->originMessage->headers();
+        /**
+         * @psalm-var array<string, string|int|float> $headers
+         * @var array $headers
+         */
+        $headers = $this->originMessage->headers();
 
         return $headers;
     }

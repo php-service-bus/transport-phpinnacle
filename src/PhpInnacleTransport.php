@@ -66,7 +66,8 @@ final class PhpInnacleTransport implements Transport
     private $logger;
 
     /**
-     * @var array<string, \ServiceBus\Transport\PhpInnacle\PhpInnacleConsumer>
+     * @psalm-var array<string, \ServiceBus\Transport\PhpInnacle\PhpInnacleConsumer>
+     * @var \ServiceBus\Transport\PhpInnacle\PhpInnacleConsumer[]
      */
     private $consumers = [];
 
@@ -303,7 +304,10 @@ final class PhpInnacleTransport implements Transport
         return call(
             function(AmqpExchange $exchange, array $binds): \Generator
             {
-                /** @var array<mixed, \ServiceBus\Transport\Common\TopicBind> $binds */
+                /**
+                 * @var \ServiceBus\Transport\Common\TopicBind[] $binds
+                 * @psalm-var array<mixed, \ServiceBus\Transport\Common\TopicBind> $binds
+                 */
 
                 yield $this->connect();
 
@@ -330,7 +334,10 @@ final class PhpInnacleTransport implements Transport
         return call(
             function(AmqpQueue $queue, array $binds): \Generator
             {
-                /** @var array<mixed, \ServiceBus\Transport\Common\QueueBind> $binds */
+                /**
+                 * @var \ServiceBus\Transport\Common\QueueBind[] $binds
+                 * @psalm-var array<mixed, \ServiceBus\Transport\Common\QueueBind> $binds
+                 */
 
                 yield $this->connect();
 
