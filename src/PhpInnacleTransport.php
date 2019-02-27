@@ -1,7 +1,7 @@
 <?php
 
 /**
- * phpinnacle RabbitMQ adapter
+ * phpinnacle RabbitMQ adapter.
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -38,14 +38,14 @@ use ServiceBus\Transport\Common\Transport;
 final class PhpInnacleTransport implements Transport
 {
     /**
-     * Client for work with AMQP protocol
+     * Client for work with AMQP protocol.
      *
      * @var Client
      */
     private $client;
 
     /**
-     * Channel client
+     * Channel client.
      *
      * Null if not connected
      *
@@ -54,7 +54,7 @@ final class PhpInnacleTransport implements Transport
     private $channel;
 
     /**
-     * Publisher
+     * Publisher.
      *
      * @var PhpInnaclePublisher|null
      */
@@ -67,12 +67,13 @@ final class PhpInnacleTransport implements Transport
 
     /**
      * @psalm-var array<string, \ServiceBus\Transport\PhpInnacle\PhpInnacleConsumer>
+     *
      * @var \ServiceBus\Transport\PhpInnacle\PhpInnacleConsumer[]
      */
     private $consumers = [];
 
     /**
-     * AMQP configuration
+     * AMQP configuration.
      *
      * @var Config
      */
@@ -87,8 +88,7 @@ final class PhpInnacleTransport implements Transport
         AmqpConnectionConfiguration $connectionConfig,
         AmqpQoSConfiguration $qosConfig = null,
         ?LoggerInterface $logger = null
-    )
-    {
+    ) {
         $qosConfig = $qosConfig ?? new AmqpQoSConfiguration();
 
         $this->logger = $logger ?? new NullLogger();
@@ -98,7 +98,7 @@ final class PhpInnacleTransport implements Transport
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function connect(): Promise
     {
@@ -109,7 +109,7 @@ final class PhpInnacleTransport implements Transport
         return call(
             function(): \Generator
             {
-                if(true === $this->client->isConnected())
+                if (true === $this->client->isConnected())
                 {
                     return;
                 }
@@ -121,6 +121,7 @@ final class PhpInnacleTransport implements Transport
 
                     /**
                      * @psalm-suppress TooManyTemplateParams Wrong Promise template
+                     *
                      * @var Channel $channel
                      */
                     $channel = yield $this->client->channel();
@@ -130,10 +131,10 @@ final class PhpInnacleTransport implements Transport
                     $this->logger->info('Connected to broker', [
                         'host'  => $this->config->host(),
                         'port'  => $this->config->port(),
-                        'vhost' => $this->config->vhost()
+                        'vhost' => $this->config->vhost(),
                     ]);
                 }
-                catch(\Throwable $throwable)
+                catch (\Throwable $throwable)
                 {
                     throw new ConnectionFail($throwable->getMessage(), (int) $throwable->getCode(), $throwable);
                 }
@@ -142,7 +143,7 @@ final class PhpInnacleTransport implements Transport
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function disconnect(): Promise
     {
@@ -155,13 +156,13 @@ final class PhpInnacleTransport implements Transport
             {
                 try
                 {
-                    if(true === $this->client->isConnected())
+                    if (true === $this->client->isConnected())
                     {
                         /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
                         yield $this->client->disconnect();
                     }
                 }
-                catch(\Throwable $throwable)
+                catch (\Throwable $throwable)
                 {
                     /** Not interested */
                 }
@@ -169,7 +170,7 @@ final class PhpInnacleTransport implements Transport
                 $this->logger->info('Disconnect from broker', [
                     'host'  => $this->config->host(),
                     'port'  => $this->config->port(),
-                    'vhost' => $this->config->vhost()
+                    'vhost' => $this->config->vhost(),
                 ]);
             }
         );
@@ -178,7 +179,7 @@ final class PhpInnacleTransport implements Transport
     /**
      * @psalm-suppress MixedTypeCoercion
      *
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function consume(Queue ...$queues): Promise
     {
@@ -193,7 +194,7 @@ final class PhpInnacleTransport implements Transport
                 $emitter = new Emitter();
 
                 /** @var AmqpQueue $queue */
-                foreach($queues as $queue)
+                foreach ($queues as $queue)
                 {
                     $queueName = (string) $queue;
 
@@ -201,7 +202,7 @@ final class PhpInnacleTransport implements Transport
                         'host'      => $this->config->host(),
                         'port'      => $this->config->port(),
                         'vhost'     => $this->config->vhost(),
-                        'queueName' => $queueName
+                        'queueName' => $queueName,
                     ]);
 
                     $consumer = new PhpInnacleConsumer($queue, $channel, $this->logger);
@@ -212,11 +213,11 @@ final class PhpInnacleTransport implements Transport
                             {
                                 yield $emitter->emit($incomingPackage);
                             }
-                            catch(\Throwable $throwable)
+                            catch (\Throwable $throwable)
                             {
                                 $this->logger->error('Emit package failed: {throwableMessage} ', [
                                     'throwableMessage' => $throwable->getMessage(),
-                                    'throwablePoint'   => \sprintf('%s:%d', $throwable->getFile(), $throwable->getLine())
+                                    'throwablePoint'   => \sprintf('%s:%d', $throwable->getFile(), $throwable->getLine()),
                                 ]);
                             }
                         }
@@ -232,7 +233,7 @@ final class PhpInnacleTransport implements Transport
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function stop(): Promise
     {
@@ -244,16 +245,16 @@ final class PhpInnacleTransport implements Transport
                  * @var string             $queueName
                  * @var PhpInnacleConsumer $consumer
                  */
-                foreach($consumers as $queueName => $consumer)
+                foreach ($consumers as $queueName => $consumer)
                 {
                     $this->logger->info('Completing the subscription to the "{queueName}" queue', [
                         'host'      => $this->config->host(),
                         'port'      => $this->config->port(),
                         'vhost'     => $this->config->vhost(),
-                        'queueName' => $queueName
+                        'queueName' => $queueName,
                     ]);
 
-                    if(true === isset($this->consumers[$queueName]))
+                    if (true === isset($this->consumers[$queueName]))
                     {
                         /** @var PhpInnacleConsumer $consumer */
                         $consumer = $this->consumers[$queueName];
@@ -269,7 +270,7 @@ final class PhpInnacleTransport implements Transport
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function send(OutboundPackage $outboundPackage): Promise
     {
@@ -282,7 +283,7 @@ final class PhpInnacleTransport implements Transport
                 /** @var Channel $channel */
                 $channel = $this->channel;
 
-                if(null === $this->publisher)
+                if (null === $this->publisher)
                 {
                     $this->publisher = new PhpInnaclePublisher($channel, $this->logger);
                 }
@@ -294,7 +295,7 @@ final class PhpInnacleTransport implements Transport
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function createTopic(Topic $topic, TopicBind ...$binds): Promise
     {
@@ -308,7 +309,6 @@ final class PhpInnacleTransport implements Transport
                  * @var \ServiceBus\Transport\Common\TopicBind[] $binds
                  * @psalm-var array<mixed, \ServiceBus\Transport\Common\TopicBind> $binds
                  */
-
                 yield $this->connect();
 
                 /** @var Channel $channel */
@@ -319,12 +319,13 @@ final class PhpInnacleTransport implements Transport
                 yield from $configurator->doCreateExchange($exchange);
                 yield from $configurator->doBindExchange($exchange, $binds);
             },
-            $topic, $binds
+            $topic,
+            $binds
         );
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function createQueue(Queue $queue, QueueBind ...$binds): Promise
     {
@@ -338,7 +339,6 @@ final class PhpInnacleTransport implements Transport
                  * @var \ServiceBus\Transport\Common\QueueBind[] $binds
                  * @psalm-var array<mixed, \ServiceBus\Transport\Common\QueueBind> $binds
                  */
-
                 yield $this->connect();
 
                 /** @var Channel $channel */
@@ -349,12 +349,13 @@ final class PhpInnacleTransport implements Transport
                 yield from $configurator->doCreateQueue($queue);
                 yield from $configurator->doBindQueue($queue, $binds);
             },
-            $queue, $binds
+            $queue,
+            $binds
         );
     }
 
     /**
-     * Create phpinnacle configuration
+     * Create phpinnacle configuration.
      *
      * @param AmqpConnectionConfiguration $connectionConfiguration
      * @param AmqpQoSConfiguration        $qoSConfiguration
@@ -364,8 +365,7 @@ final class PhpInnacleTransport implements Transport
     private function adaptConfig(
         AmqpConnectionConfiguration $connectionConfiguration,
         AmqpQoSConfiguration $qoSConfiguration
-    ): Config
-    {
+    ): Config {
         $config = new Config(
             $connectionConfiguration->host(),
             $connectionConfiguration->port(),

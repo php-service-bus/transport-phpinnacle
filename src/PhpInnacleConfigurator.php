@@ -1,7 +1,7 @@
 <?php
 
 /**
- * phpinnacle RabbitMQ adapter
+ * phpinnacle RabbitMQ adapter.
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -22,7 +22,7 @@ use ServiceBus\Transport\Common\Exceptions\CreateQueueFailed;
 use ServiceBus\Transport\Common\Exceptions\CreateTopicFailed;
 
 /**
- * Creating exchangers\queues and bind them
+ * Creating exchangers\queues and bind them.
  *
  * @internal
  */
@@ -49,13 +49,13 @@ final class PhpInnacleConfigurator
     }
 
     /**
-     * Execute queue creation
+     * Execute queue creation.
      *
      * @param AmqpQueue $queue
      *
-     * @return \Generator
-     *
      * @throws \ServiceBus\Transport\Common\Exceptions\CreateQueueFailed
+     *
+     * @return \Generator
      */
     public function doCreateQueue(AmqpQueue $queue): \Generator
     {
@@ -65,31 +65,36 @@ final class PhpInnacleConfigurator
 
             /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
             yield $this->channel->queueDeclare(
-                (string) $queue, $queue->isPassive(), $queue->isDurable(), $queue->isExclusive(),
-                $queue->autoDeleteEnabled(), false, $queue->arguments()
+                (string) $queue,
+                $queue->isPassive(),
+                $queue->isDurable(),
+                $queue->isExclusive(),
+                $queue->autoDeleteEnabled(),
+                false,
+                $queue->arguments()
             );
         }
-        catch(\Throwable $throwable)
+        catch (\Throwable $throwable)
         {
             throw CreateQueueFailed::fromThrowable($throwable);
         }
     }
 
     /**
-     * Bind queue to exchange(s)
+     * Bind queue to exchange(s).
      *
      * @param AmqpQueue                                            $queue
      * @param array<mixed, \ServiceBus\Transport\Common\QueueBind> $binds
      *
-     * @return \Generator
-     *
      * @throws \ServiceBus\Transport\Common\Exceptions\BindFailed
+     *
+     * @return \Generator
      */
     public function doBindQueue(AmqpQueue $queue, array $binds): \Generator
     {
         try
         {
-            foreach($binds as $bind)
+            foreach ($binds as $bind)
             {
                 /** @var \ServiceBus\Transport\Common\QueueBind $bind */
 
@@ -99,10 +104,11 @@ final class PhpInnacleConfigurator
                 yield from $this->doCreateExchange($destinationExchange);
 
                 $this->logger->info(
-                    'Linking "{queueName}" queue to the exchange "{exchangeName}" with the routing key "{routingKey}"', [
+                    'Linking "{queueName}" queue to the exchange "{exchangeName}" with the routing key "{routingKey}"',
+                    [
                         'queueName'    => (string) $queue,
                         'exchangeName' => (string) $destinationExchange,
-                        'routingKey'   => (string) $bind->routingKey
+                        'routingKey'   => (string) $bind->routingKey,
                     ]
                 );
 
@@ -110,20 +116,20 @@ final class PhpInnacleConfigurator
                 yield $this->channel->queueBind((string) $queue, (string) $destinationExchange, (string) $bind->routingKey);
             }
         }
-        catch(\Throwable $throwable)
+        catch (\Throwable $throwable)
         {
             throw BindFailed::fromThrowable($throwable);
         }
     }
 
     /**
-     * Execute exchange creation
+     * Execute exchange creation.
      *
      * @param AmqpExchange $exchange
      *
-     * @return \Generator
-     *
      * @throws \ServiceBus\Transport\Common\Exceptions\CreateTopicFailed
+     *
+     * @return \Generator
      */
     public function doCreateExchange(AmqpExchange $exchange): \Generator
     {
@@ -133,31 +139,37 @@ final class PhpInnacleConfigurator
 
             /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
             yield $this->channel->exchangeDeclare(
-                (string) $exchange, $exchange->type(), $exchange->isPassive(), $exchange->isDurable(),
-                false, false, false, $exchange->arguments()
+                (string) $exchange,
+                $exchange->type(),
+                $exchange->isPassive(),
+                $exchange->isDurable(),
+                false,
+                false,
+                false,
+                $exchange->arguments()
             );
         }
-        catch(\Throwable $throwable)
+        catch (\Throwable $throwable)
         {
             throw CreateTopicFailed::fromThrowable($throwable);
         }
     }
 
     /**
-     * Bind exchange to another exchange(s)
+     * Bind exchange to another exchange(s).
      *
      * @param AmqpExchange                                         $exchange
      * @param array<mixed, \ServiceBus\Transport\Common\TopicBind> $binds
      *
-     * @return \Generator
-     *
      * @throws \ServiceBus\Transport\Common\Exceptions\BindFailed
+     *
+     * @return \Generator
      */
     public function doBindExchange(AmqpExchange $exchange, array $binds): \Generator
     {
         try
         {
-            foreach($binds as $bind)
+            foreach ($binds as $bind)
             {
                 /** @var \ServiceBus\Transport\Common\TopicBind $bind */
 
@@ -167,10 +179,11 @@ final class PhpInnacleConfigurator
                 yield from $this->doCreateExchange($sourceExchange);
 
                 $this->logger->info(
-                    'Linking "{exchangeName}" exchange to the exchange "{destinationExchangeName}" with the routing key "{routingKey}"', [
+                    'Linking "{exchangeName}" exchange to the exchange "{destinationExchangeName}" with the routing key "{routingKey}"',
+                    [
                         'queueName'               => (string) $sourceExchange,
                         'destinationExchangeName' => (string) $exchange,
-                        'routingKey'              => (string) $bind->routingKey
+                        'routingKey'              => (string) $bind->routingKey,
                     ]
                 );
 
@@ -178,7 +191,7 @@ final class PhpInnacleConfigurator
                 yield $this->channel->exchangeBind((string) $sourceExchange, (string) $exchange, (string) $bind->routingKey);
             }
         }
-        catch(\Throwable $throwable)
+        catch (\Throwable $throwable)
         {
             throw BindFailed::fromThrowable($throwable);
         }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * phpinnacle RabbitMQ adapter
+ * phpinnacle RabbitMQ adapter.
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -13,19 +13,19 @@ declare(strict_types = 1);
 namespace ServiceBus\Transport\PhpInnacle\Tests;
 
 use function Amp\Promise\wait;
-use PHPUnit\Framework\TestCase;
-use Ramsey\Uuid\Uuid;
 use function ServiceBus\Common\readReflectionPropertyValue;
 use function ServiceBus\Common\uuid;
+use PHPUnit\Framework\TestCase;
+use Ramsey\Uuid\Uuid;
 use ServiceBus\Transport\Amqp\AmqpConnectionConfiguration;
 use ServiceBus\Transport\Amqp\AmqpExchange;
 use ServiceBus\Transport\Amqp\AmqpQueue;
 use ServiceBus\Transport\Amqp\AmqpTransportLevelDestination;
-use ServiceBus\Transport\PhpInnacle\PhpInnacleIncomingPackage;
-use ServiceBus\Transport\PhpInnacle\PhpInnacleTransport;
 use ServiceBus\Transport\Common\Package\OutboundPackage;
 use ServiceBus\Transport\Common\QueueBind;
 use ServiceBus\Transport\Common\TopicBind;
+use ServiceBus\Transport\PhpInnacle\PhpInnacleIncomingPackage;
+use ServiceBus\Transport\PhpInnacle\PhpInnacleTransport;
 
 /**
  *
@@ -38,7 +38,7 @@ final class PhpInnacleTransportTest extends TestCase
     private $transport;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function setUp(): void
     {
@@ -48,7 +48,7 @@ final class PhpInnacleTransportTest extends TestCase
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @throws \Throwable
      */
@@ -59,7 +59,7 @@ final class PhpInnacleTransportTest extends TestCase
         /** @var \PHPinnacle\Ridge\Channel|null $channel */
         $channel = readReflectionPropertyValue($this->transport, 'channel');
 
-        if(null !== $channel)
+        if (null !== $channel)
         {
             wait($channel->exchangeDelete('createExchange'));
             wait($channel->queueDelete('createQueue'));
@@ -77,9 +77,9 @@ final class PhpInnacleTransportTest extends TestCase
     /**
      * @test
      *
-     * @return void
-     *
      * @throws \Throwable
+     *
+     * @return void
      */
     public function connect(): void
     {
@@ -89,9 +89,9 @@ final class PhpInnacleTransportTest extends TestCase
     /**
      * @test
      *
-     * @return void
-     *
      * @throws \Throwable
+     *
+     * @return void
      */
     public function createExchange(): void
     {
@@ -103,9 +103,9 @@ final class PhpInnacleTransportTest extends TestCase
     /**
      * @test
      *
-     * @return void
-     *
      * @throws \Throwable
+     *
+     * @return void
      */
     public function createQueue(): void
     {
@@ -117,9 +117,9 @@ final class PhpInnacleTransportTest extends TestCase
     /**
      * @test
      *
-     * @return void
-     *
      * @throws \Throwable
+     *
+     * @return void
      */
     public function bindTopic(): void
     {
@@ -139,9 +139,9 @@ final class PhpInnacleTransportTest extends TestCase
     /**
      * @test
      *
-     * @return void
-     *
      * @throws \Throwable
+     *
+     * @return void
      */
     public function bindQueue(): void
     {
@@ -161,9 +161,9 @@ final class PhpInnacleTransportTest extends TestCase
     /**
      * @test
      *
-     * @return void
-     *
      * @throws \Throwable
+     *
+     * @return void
      */
     public function consume(): void
     {
@@ -187,13 +187,13 @@ final class PhpInnacleTransportTest extends TestCase
         );
 
         /** @noinspection LoopWhichDoesNotLoopInspection */
-        while(wait($iterator->advance()))
+        while (wait($iterator->advance()))
         {
             /** @var PhpInnacleIncomingPackage $package */
             $package = $iterator->getCurrent();
 
             static::assertInstanceOf(PhpInnacleIncomingPackage::class, $package);
-            static::assertEquals('somePayload', $package->payload());
+            static::assertSame('somePayload', $package->payload());
             static::assertCount(2, $package->headers());
             static::assertTrue(Uuid::isValid($package->traceId()));
 

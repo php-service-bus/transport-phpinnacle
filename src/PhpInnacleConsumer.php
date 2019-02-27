@@ -1,7 +1,7 @@
 <?php /** @noinspection PhpUnhandledExceptionInspection */
 
 /**
- * phpinnacle RabbitMQ adapter
+ * phpinnacle RabbitMQ adapter.
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -32,7 +32,7 @@ final class PhpInnacleConsumer
     private $channel;
 
     /**
-     * Listen queue
+     * Listen queue.
      *
      * @var AmqpQueue
      */
@@ -44,7 +44,7 @@ final class PhpInnacleConsumer
     private $logger;
 
     /**
-     * Consumer tag
+     * Consumer tag.
      *
      * @var string|null
      */
@@ -68,7 +68,7 @@ final class PhpInnacleConsumer
     }
 
     /**
-     * Listen queue messages
+     * Listen queue messages.
      *
      * @param callable(PhpInnacleIncomingPackage):\Generator $onMessageReceived
      *
@@ -80,7 +80,7 @@ final class PhpInnacleConsumer
 
         $this->logger->info('Creates new consumer on channel for queue "{queue}" with tag "{consumerTag}"', [
             'queue'       => $queueName,
-            'consumerTag' => $this->tag
+            'consumerTag' => $this->tag,
         ]);
 
         /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
@@ -96,7 +96,7 @@ final class PhpInnacleConsumer
     }
 
     /**
-     * Stop watching the queue
+     * Stop watching the queue.
      *
      * @return Promise It does not return any result
      */
@@ -112,18 +112,19 @@ final class PhpInnacleConsumer
                 /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
                 yield $this->channel->cancel($this->tag);
 
-                $this->logger->info('Subscription canceled', [
+                $this->logger->info(
+                    'Subscription canceled',
+                    [
                         'queue'       => (string) $this->queue,
-                        'consumerTag' => $this->tag
+                        'consumerTag' => $this->tag,
                     ]
                 );
-
             }
         );
     }
 
     /**
-     * Create listener callback
+     * Create listener callback.
      *
      * @param callable(PhpInnacleIncomingPackage):\Generator $onMessageReceived
      *
@@ -142,7 +143,7 @@ final class PhpInnacleConsumer
                     'packageId'         => $incomingPackage->id(),
                     'traceId'           => $incomingPackage->traceId(),
                     'rawMessagePayload' => $incomingPackage->payload(),
-                    'rawMessageHeaders' => $incomingPackage->headers()
+                    'rawMessageHeaders' => $incomingPackage->headers(),
                 ]);
 
                 /** @psalm-suppress InvalidArgument */
@@ -150,12 +151,14 @@ final class PhpInnacleConsumer
 
                 unset($incomingPackage);
             }
-            catch(\Throwable $throwable)
+            catch (\Throwable $throwable)
             {
-                $this->logger->error('Error occurred: {throwableMessage}', [
+                $this->logger->error(
+                    'Error occurred: {throwableMessage}',
+                    [
                         'throwableMessage'  => $throwable->getMessage(),
                         'throwablePoint'    => \sprintf('%s:%d', $throwable->getFile(), $throwable->getLine()),
-                        'rawMessagePayload' => $message->content()
+                        'rawMessagePayload' => $message->content(),
                     ]
                 );
             }

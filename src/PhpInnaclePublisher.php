@@ -1,7 +1,7 @@
 <?php
 
 /**
- * phpinnacle RabbitMQ adapter
+ * phpinnacle RabbitMQ adapter.
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -47,7 +47,7 @@ final class PhpInnaclePublisher
     }
 
     /**
-     * Send message to broker
+     * Send message to broker.
      *
      * @param OutboundPackage $outboundPackage
      *
@@ -65,7 +65,7 @@ final class PhpInnaclePublisher
                 $internalHeaders = [
                     'delivery-mode'                     => true === $outboundPackage->persistentFlag ? self::AMQP_DURABLE : null,
                     'expiration'                        => $outboundPackage->expiredAfter,
-                    Transport::SERVICE_BUS_TRACE_HEADER => $outboundPackage->traceId
+                    Transport::SERVICE_BUS_TRACE_HEADER => $outboundPackage->traceId,
                 ];
 
                 /** @var \ServiceBus\Transport\Amqp\AmqpTransportLevelDestination $destination */
@@ -81,7 +81,7 @@ final class PhpInnaclePublisher
                     'headers'            => $headers,
                     'isMandatory'        => $outboundPackage->mandatoryFlag,
                     'isImmediate'        => $outboundPackage->immediateFlag,
-                    'expiredAt'          => $outboundPackage->expiredAfter
+                    'expiredAt'          => $outboundPackage->expiredAfter,
                 ]);
 
                 /** @psalm-suppress TooManyTemplateParams Wrong Promise template */

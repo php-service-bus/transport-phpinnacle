@@ -1,7 +1,7 @@
 <?php
 
 /**
- * phpinnacle RabbitMQ adapter
+ * phpinnacle RabbitMQ adapter.
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -13,10 +13,10 @@ declare(strict_types = 1);
 namespace ServiceBus\Transport\PhpInnacle;
 
 use function Amp\call;
+use function ServiceBus\Common\uuid;
 use Amp\Promise;
 use PHPinnacle\Ridge\Channel;
 use PHPinnacle\Ridge\Message;
-use function ServiceBus\Common\uuid;
 use ServiceBus\Transport\Amqp\AmqpTransportLevelDestination;
 use ServiceBus\Transport\Common\DeliveryDestination;
 use ServiceBus\Transport\Common\Exceptions\AcknowledgeFailed;
@@ -31,14 +31,14 @@ use ServiceBus\Transport\Common\Transport;
 final class PhpInnacleIncomingPackage implements IncomingPackage
 {
     /**
-     * Received package id
+     * Received package id.
      *
      * @var string
      */
     private $id;
 
     /**
-     * The time the message was received (Unix timestamp with microseconds)
+     * The time the message was received (Unix timestamp with microseconds).
      *
      * @var float
      */
@@ -71,7 +71,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function id(): string
     {
@@ -79,7 +79,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function time(): float
     {
@@ -87,7 +87,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function origin(): DeliveryDestination
     {
@@ -99,7 +99,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function payload(): string
     {
@@ -107,12 +107,13 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function headers(): array
     {
         /**
          * @psalm-var array<string, string|int|float> $headers
+         *
          * @var array $headers
          */
         $headers = $this->originMessage->headers();
@@ -121,7 +122,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function ack(): Promise
     {
@@ -137,7 +138,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
                     /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
                     yield $this->channel->ack($this->originMessage);
                 }
-                catch(\Throwable $throwable)
+                catch (\Throwable $throwable)
                 {
                     throw new AcknowledgeFailed($throwable->getMessage(), (int) $throwable->getCode(), $throwable);
                 }
@@ -146,7 +147,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function nack(bool $requeue, ?string $withReason = null): Promise
     {
@@ -159,7 +160,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
                     /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
                     yield $this->channel->nack($this->originMessage, false, $requeue);
                 }
-                catch(\Throwable $throwable)
+                catch (\Throwable $throwable)
                 {
                     throw new NotAcknowledgeFailed($throwable->getMessage(), (int) $throwable->getCode(), $throwable);
                 }
@@ -169,7 +170,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function reject(bool $requeue, ?string $withReason = null): Promise
     {
@@ -182,7 +183,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
                     /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
                     yield $this->channel->reject($this->originMessage, $requeue);
                 }
-                catch(\Throwable $throwable)
+                catch (\Throwable $throwable)
                 {
                     throw new RejectFailed($throwable->getMessage(), (int) $throwable->getCode(), $throwable);
                 }
@@ -192,13 +193,13 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function traceId(): string
     {
         $traceId = (string) $this->originMessage->header(Transport::SERVICE_BUS_TRACE_HEADER);
 
-        if('' === $traceId)
+        if ('' === $traceId)
         {
             $traceId = uuid();
         }
