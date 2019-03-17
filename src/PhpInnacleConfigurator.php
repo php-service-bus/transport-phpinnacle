@@ -1,7 +1,7 @@
 <?php
 
 /**
- * phpinnacle RabbitMQ adapter.
+ * PHPinnacle RabbitMQ adapter.
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -12,6 +12,8 @@ declare(strict_types = 1);
 
 namespace ServiceBus\Transport\PhpInnacle;
 
+use function Amp\call;
+use Amp\Promise;
 use PHPinnacle\Ridge\Channel;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -55,71 +57,87 @@ final class PhpInnacleConfigurator
      *
      * @throws \ServiceBus\Transport\Common\Exceptions\CreateQueueFailed
      *
-     * @return \Generator
+     * @return Promise
      */
-    public function doCreateQueue(AmqpQueue $queue): \Generator
+    public function doCreateQueue(AmqpQueue $queue): Promise
     {
-        try
-        {
-            $this->logger->info('Creating "{queueName}" queue', ['queueName' => (string) $queue]);
+        /** @psalm-suppress InvalidArgument */
+        return call(
+            function(AmqpQueue $queue): \Generator
+            {
+                try
+                {
+                    $this->logger->info('Creating "{queueName}" queue', ['queueName' => (string) $queue]);
 
-            /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
-            yield $this->channel->queueDeclare(
-                (string) $queue,
-                $queue->isPassive(),
-                $queue->isDurable(),
-                $queue->isExclusive(),
-                $queue->autoDeleteEnabled(),
-                false,
-                $queue->arguments()
-            );
-        }
-        catch (\Throwable $throwable)
-        {
-            throw CreateQueueFailed::fromThrowable($throwable);
-        }
+                    /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
+                    yield $this->channel->queueDeclare(
+                        (string) $queue,
+                        $queue->isPassive(),
+                        $queue->isDurable(),
+                        $queue->isExclusive(),
+                        $queue->autoDeleteEnabled(),
+                        false,
+                        $queue->arguments()
+                    );
+                }
+                catch (\Throwable $throwable)
+                {
+                    throw CreateQueueFailed::fromThrowable($throwable);
+                }
+            },
+            $queue
+        );
     }
 
     /**
      * Bind queue to exchange(s).
      *
-     * @param AmqpQueue                                            $queue
-     * @param array<mixed, \ServiceBus\Transport\Common\QueueBind> $binds
+     * @psalm-param array<mixed, \ServiceBus\Transport\Common\QueueBind> $binds
+     *
+     * @param AmqpQueue   $queue
+     * @param \ServiceBus\Transport\Common\QueueBind[] $binds
      *
      * @throws \ServiceBus\Transport\Common\Exceptions\BindFailed
      *
-     * @return \Generator
+     * @return Promise
      */
-    public function doBindQueue(AmqpQueue $queue, array $binds): \Generator
+    public function doBindQueue(AmqpQueue $queue, array $binds): Promise
     {
-        try
-        {
-            foreach ($binds as $bind)
+        /** @psalm-suppress InvalidArgument */
+        return call(
+            function(AmqpQueue $queue, array $binds): \Generator
             {
-                /** @var \ServiceBus\Transport\Common\QueueBind $bind */
+                try
+                {
+                    /** @var \ServiceBus\Transport\Common\QueueBind $bind */
+                    foreach ($binds as $bind)
+                    {
+                        /** @var AmqpExchange $destinationExchange */
+                        $destinationExchange = $bind->destinationTopic;
 
-                /** @var AmqpExchange $destinationExchange */
-                $destinationExchange = $bind->destinationTopic;
+                        yield $this->doCreateExchange($destinationExchange);
 
-                yield from $this->doCreateExchange($destinationExchange);
+                        $this->logger->info(
+                            'Linking "{queueName}" queue to the exchange "{exchangeName}" with the routing key "{routingKey}"',
+                            [
+                                'queueName'    => (string) $queue,
+                                'exchangeName' => (string) $destinationExchange,
+                                'routingKey'   => (string) $bind->routingKey,
+                            ]
+                        );
 
-                $this->logger->info(
-                    'Linking "{queueName}" queue to the exchange "{exchangeName}" with the routing key "{routingKey}"',
-                    [
-                        'queueName'    => (string) $queue,
-                        'exchangeName' => (string) $destinationExchange,
-                        'routingKey'   => (string) $bind->routingKey,
-                    ]
-                );
-
-                /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
-                yield $this->channel->queueBind((string) $queue, (string) $destinationExchange, (string) $bind->routingKey);
-            }
-        }
-        catch (\Throwable $throwable)
-        {
-            throw BindFailed::fromThrowable($throwable);
-        }
+                        /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
+                        yield $this->channel->queueBind((string) $queue, (string) $destinationExchange, (string) $bind->routingKey);
+                    }
+                }
+                catch (\Throwable $throwable)
+                {
+                    throw BindFailed::fromThrowable($throwable);
+                }
+            },
+            $queue,
+            $binds
+        );
     }
 
     /**
@@ -129,71 +147,87 @@ final class PhpInnacleConfigurator
      *
      * @throws \ServiceBus\Transport\Common\Exceptions\CreateTopicFailed
      *
-     * @return \Generator
+     * @return Promise
      */
-    public function doCreateExchange(AmqpExchange $exchange): \Generator
+    public function doCreateExchange(AmqpExchange $exchange): Promise
     {
-        try
-        {
-            $this->logger->info('Creating "{exchangeName}" exchange', ['exchangeName' => (string) $exchange]);
+        /** @psalm-suppress InvalidArgument */
+        return call(
+            function(AmqpExchange $exchange): \Generator
+            {
+                try
+                {
+                    $this->logger->info('Creating "{exchangeName}" exchange', ['exchangeName' => (string) $exchange]);
 
-            /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
-            yield $this->channel->exchangeDeclare(
-                (string) $exchange,
-                $exchange->type(),
-                $exchange->isPassive(),
-                $exchange->isDurable(),
-                false,
-                false,
-                false,
-                $exchange->arguments()
-            );
-        }
-        catch (\Throwable $throwable)
-        {
-            throw CreateTopicFailed::fromThrowable($throwable);
-        }
+                    /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
+                    yield $this->channel->exchangeDeclare(
+                        (string) $exchange,
+                        $exchange->type(),
+                        $exchange->isPassive(),
+                        $exchange->isDurable(),
+                        false,
+                        false,
+                        false,
+                        $exchange->arguments()
+                    );
+                }
+                catch (\Throwable $throwable)
+                {
+                    throw CreateTopicFailed::fromThrowable($throwable);
+                }
+            },
+            $exchange
+        );
     }
 
     /**
      * Bind exchange to another exchange(s).
      *
-     * @param AmqpExchange                                         $exchange
-     * @param array<mixed, \ServiceBus\Transport\Common\TopicBind> $binds
+     * @psalm-param array<mixed, \ServiceBus\Transport\Common\TopicBind> $binds
+     *
+     * @param AmqpExchange $exchange
+     * @param \ServiceBus\Transport\Common\TopicBind[]  $binds
      *
      * @throws \ServiceBus\Transport\Common\Exceptions\BindFailed
      *
-     * @return \Generator
+     * @return Promise
      */
-    public function doBindExchange(AmqpExchange $exchange, array $binds): \Generator
+    public function doBindExchange(AmqpExchange $exchange, array $binds): Promise
     {
-        try
-        {
-            foreach ($binds as $bind)
+        /** @psalm-suppress InvalidArgument */
+        return call(
+            function(AmqpExchange $exchange, array $binds): \Generator
             {
-                /** @var \ServiceBus\Transport\Common\TopicBind $bind */
+                try
+                {
+                    /** @var \ServiceBus\Transport\Common\TopicBind $bind */
+                    foreach ($binds as $bind)
+                    {
+                        /** @var AmqpExchange $sourceExchange */
+                        $sourceExchange = $bind->destinationTopic;
 
-                /** @var AmqpExchange $sourceExchange */
-                $sourceExchange = $bind->destinationTopic;
+                        yield $this->doCreateExchange($sourceExchange);
 
-                yield from $this->doCreateExchange($sourceExchange);
+                        $this->logger->info(
+                            'Linking "{exchangeName}" exchange to the exchange "{destinationExchangeName}" with the routing key "{routingKey}"',
+                            [
+                                'queueName'               => (string) $sourceExchange,
+                                'destinationExchangeName' => (string) $exchange,
+                                'routingKey'              => (string) $bind->routingKey,
+                            ]
+                        );
 
-                $this->logger->info(
-                    'Linking "{exchangeName}" exchange to the exchange "{destinationExchangeName}" with the routing key "{routingKey}"',
-                    [
-                        'queueName'               => (string) $sourceExchange,
-                        'destinationExchangeName' => (string) $exchange,
-                        'routingKey'              => (string) $bind->routingKey,
-                    ]
-                );
-
-                /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
-                yield $this->channel->exchangeBind((string) $sourceExchange, (string) $exchange, (string) $bind->routingKey);
-            }
-        }
-        catch (\Throwable $throwable)
-        {
-            throw BindFailed::fromThrowable($throwable);
-        }
+                        /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
+                        yield $this->channel->exchangeBind((string) $sourceExchange, (string) $exchange, (string) $bind->routingKey);
+                    }
+                }
+                catch (\Throwable $throwable)
+                {
+                    throw BindFailed::fromThrowable($throwable);
+                }
+            },
+            $exchange,
+            $binds
+        );
     }
 }

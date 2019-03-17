@@ -1,7 +1,7 @@
 <?php
 
 /**
- * phpinnacle RabbitMQ adapter.
+ * PHPinnacle RabbitMQ adapter.
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -205,9 +205,11 @@ final class PhpInnacleTransport implements Transport
                         'queueName' => $queueName,
                     ]);
 
+                    $logger   = $this->logger;
                     $consumer = new PhpInnacleConsumer($queue, $channel, $this->logger);
+
                     $consumer->listen(
-                        function(PhpInnacleIncomingPackage $incomingPackage) use ($emitter): \Generator
+                        static function(PhpInnacleIncomingPackage $incomingPackage) use ($emitter, $logger): \Generator
                         {
                             try
                             {
@@ -215,7 +217,7 @@ final class PhpInnacleTransport implements Transport
                             }
                             catch (\Throwable $throwable)
                             {
-                                $this->logger->error('Emit package failed: {throwableMessage} ', [
+                                $logger->error('Emit package failed: {throwableMessage} ', [
                                     'throwableMessage' => $throwable->getMessage(),
                                     'throwablePoint'   => \sprintf('%s:%d', $throwable->getFile(), $throwable->getLine()),
                                 ]);
@@ -316,8 +318,8 @@ final class PhpInnacleTransport implements Transport
 
                 $configurator = new PhpInnacleConfigurator($channel);
 
-                yield from $configurator->doCreateExchange($exchange);
-                yield from $configurator->doBindExchange($exchange, $binds);
+                yield $configurator->doCreateExchange($exchange);
+                yield $configurator->doBindExchange($exchange, $binds);
             },
             $topic,
             $binds
@@ -346,8 +348,8 @@ final class PhpInnacleTransport implements Transport
 
                 $configurator = new PhpInnacleConfigurator($channel);
 
-                yield from $configurator->doCreateQueue($queue);
-                yield from $configurator->doBindQueue($queue, $binds);
+                yield $configurator->doCreateQueue($queue);
+                yield $configurator->doBindQueue($queue, $binds);
             },
             $queue,
             $binds

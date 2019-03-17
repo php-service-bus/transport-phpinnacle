@@ -1,7 +1,7 @@
 <?php
 
 /**
- * phpinnacle RabbitMQ adapter.
+ * PHPinnacle RabbitMQ adapter.
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -33,7 +33,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
     /**
      * Received package id.
      *
-     * @var string
+     * @var string|null
      */
     private $id;
 
@@ -62,12 +62,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
      */
     public static function received(Message $message, Channel $channel): self
     {
-        $self = new self();
-
-        $self->channel       = $channel;
-        $self->originMessage = $message;
-
-        return $self;
+        return new self($message, $channel);
     }
 
     /**
@@ -75,6 +70,11 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
      */
     public function id(): string
     {
+        if (null === $this->id)
+        {
+            $this->id = uuid();
+        }
+
         return $this->id;
     }
 
@@ -208,11 +208,16 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
     }
 
     /**
+     * PhpInnacleIncomingPackage constructor.
      *
+     * @param Message $message
+     * @param Channel $channel
      */
-    private function __construct()
+    private function __construct(Message $message, Channel $channel)
     {
-        $this->id   = uuid();
+        $this->originMessage = $message;
+        $this->channel       = $channel;
+
         $this->time = (float) \microtime(true);
     }
 }
