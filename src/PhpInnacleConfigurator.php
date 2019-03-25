@@ -53,6 +53,8 @@ final class PhpInnacleConfigurator
     /**
      * Execute queue creation.
      *
+     * @noinspection PhpDocRedundantThrowsInspection
+     *
      * @param AmqpQueue $queue
      *
      * @throws \ServiceBus\Transport\Common\Exceptions\CreateQueueFailed
@@ -91,6 +93,8 @@ final class PhpInnacleConfigurator
 
     /**
      * Bind queue to exchange(s).
+     *
+     * @noinspection PhpDocRedundantThrowsInspection
      *
      * @psalm-param array<mixed, \ServiceBus\Transport\Common\QueueBind> $binds
      *
@@ -143,6 +147,8 @@ final class PhpInnacleConfigurator
     /**
      * Execute exchange creation.
      *
+     * @noinspection PhpDocRedundantThrowsInspection
+     *
      * @param AmqpExchange $exchange
      *
      * @throws \ServiceBus\Transport\Common\Exceptions\CreateTopicFailed
@@ -182,6 +188,8 @@ final class PhpInnacleConfigurator
 
     /**
      * Bind exchange to another exchange(s).
+     *
+     * @noinspection PhpDocRedundantThrowsInspection
      *
      * @psalm-param array<mixed, \ServiceBus\Transport\Common\TopicBind> $binds
      *

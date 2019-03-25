@@ -59,7 +59,7 @@ final class PhpInnacleConsumer
      */
     public function __construct(AmqpQueue $queue, Channel $channel, ?LoggerInterface $logger = null)
     {
-        /** @noinspection PhpUnhandledExceptionInspection */
+        /** @noinspection PhpUnhandledExceptionInspection UnnecessaryCastingInspection */
         $this->tag = \sha1((string) \random_bytes(16));
 
         $this->queue   = $queue;
