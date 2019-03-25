@@ -15,6 +15,7 @@ namespace ServiceBus\Transport\PhpInnacle\Tests;
 use function Amp\Promise\wait;
 use function ServiceBus\Common\readReflectionPropertyValue;
 use function ServiceBus\Common\uuid;
+use Amp\Loop;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 use ServiceBus\Transport\Amqp\AmqpConnectionConfiguration;
@@ -173,31 +174,31 @@ final class PhpInnacleTransportTest extends TestCase
         wait($this->transport->createTopic($exchange));
         wait($this->transport->createQueue($queue, QueueBind::create($exchange, 'consume')));
 
-        $iterator = wait($this->transport->consume($queue));
+        Loop::run(
+            function() use ($queue)
+            {
+                yield $this->transport->send(
+                    OutboundPackage::create(
+                        'somePayload',
+                        ['key' => 'value'],
+                        new AmqpTransportLevelDestination('consume', 'consume'),
+                        uuid()
+                    )
+                );
 
-        wait(
-            $this->transport->send(
-                OutboundPackage::create(
-                    'somePayload',
-                    ['key' => 'value'],
-                    new AmqpTransportLevelDestination('consume', 'consume'),
-                    uuid()
-                )
-            )
+                $this->transport->consume(
+                    function(PhpInnacleIncomingPackage $package): void
+                    {
+                        static::assertInstanceOf(PhpInnacleIncomingPackage::class, $package);
+                        static::assertSame('somePayload', $package->payload());
+                        static::assertCount(2, $package->headers());
+                        static::assertTrue(Uuid::isValid($package->traceId()));
+
+                        Loop::stop();
+                    },
+                    $queue
+                );
+            }
         );
-
-        /** @noinspection LoopWhichDoesNotLoopInspection */
-        while (wait($iterator->advance()))
-        {
-            /** @var PhpInnacleIncomingPackage $package */
-            $package = $iterator->getCurrent();
-
-            static::assertInstanceOf(PhpInnacleIncomingPackage::class, $package);
-            static::assertSame('somePayload', $package->payload());
-            static::assertCount(2, $package->headers());
-            static::assertTrue(Uuid::isValid($package->traceId()));
-
-            break;
-        }
     }
 }

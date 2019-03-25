@@ -13,7 +13,6 @@ declare(strict_types = 1);
 namespace ServiceBus\Transport\PhpInnacle;
 
 use function Amp\call;
-use Amp\Emitter;
 use Amp\Promise;
 use PHPinnacle\Ridge\Channel;
 use PHPinnacle\Ridge\Client;
@@ -181,17 +180,20 @@ final class PhpInnacleTransport implements Transport
      *
      * {@inheritdoc}
      */
-    public function consume(Queue ...$queues): Promise
+    public function consume(callable $onMessage, Queue ... $queues): Promise
     {
         /** @psalm-suppress InvalidArgument */
         return call(
-            function(array $queues): \Generator
+            function(array $queues) use ($onMessage): \Generator
             {
                 yield $this->connect();
 
-                /** @var Channel $channel */
-                $channel = $this->channel;
-                $emitter = new Emitter();
+                /**
+                 * @psalm-suppress TooManyTemplateParams Wrong Promise template
+                 *
+                 * @var Channel $channel
+                 */
+                $channel = yield $this->client->channel();
 
                 /** @var AmqpQueue $queue */
                 foreach ($queues as $queue)
@@ -203,32 +205,15 @@ final class PhpInnacleTransport implements Transport
                         'port'      => $this->config->port(),
                         'vhost'     => $this->config->vhost(),
                         'queueName' => $queueName,
+                        'channel'   => $channel->id(),
                     ]);
 
-                    $logger   = $this->logger;
                     $consumer = new PhpInnacleConsumer($queue, $channel, $this->logger);
 
-                    $consumer->listen(
-                        static function(PhpInnacleIncomingPackage $incomingPackage) use ($emitter, $logger): \Generator
-                        {
-                            try
-                            {
-                                yield $emitter->emit($incomingPackage);
-                            }
-                            catch (\Throwable $throwable)
-                            {
-                                $logger->error('Emit package failed: {throwableMessage} ', [
-                                    'throwableMessage' => $throwable->getMessage(),
-                                    'throwablePoint'   => \sprintf('%s:%d', $throwable->getFile(), $throwable->getLine()),
-                                ]);
-                            }
-                        }
-                    );
+                    $consumer->listen($onMessage);
 
                     $this->consumers[$queueName] = $consumer;
                 }
-
-                return $emitter->iterate();
             },
             $queues
         );
