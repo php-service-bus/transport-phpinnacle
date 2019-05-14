@@ -109,8 +109,11 @@ final class PhpInnacleConsumer
         return call(
             function(): \Generator
             {
-                /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
-                yield $this->channel->cancel($this->tag);
+                if (null !== $this->tag)
+                {
+                    /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
+                    yield $this->channel->cancel($this->tag);
+                }
 
                 $this->logger->info(
                     'Subscription canceled',

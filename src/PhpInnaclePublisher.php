@@ -88,7 +88,7 @@ final class PhpInnaclePublisher
                 yield $channel->publish(
                     $content,
                     $destination->exchange,
-                    $destination->routingKey,
+                    (string) $destination->routingKey,
                     \array_filter($headers),
                     $outboundPackage->mandatoryFlag,
                     $outboundPackage->immediateFlag
