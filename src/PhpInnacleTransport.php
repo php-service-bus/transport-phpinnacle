@@ -198,13 +198,11 @@ final class PhpInnacleTransport implements Transport
                 /** @var AmqpQueue $queue */
                 foreach ($queues as $queue)
                 {
-                    $queueName = (string) $queue;
-
                     $this->logger->info('Starting a subscription to the "{queueName}" queue', [
                         'host'      => $this->config->host(),
                         'port'      => $this->config->port(),
                         'vhost'     => $this->config->vhost(),
-                        'queueName' => $queueName,
+                        'queueName' => $queue->name,
                         'channel'   => $channel->id(),
                     ]);
 
@@ -212,7 +210,7 @@ final class PhpInnacleTransport implements Transport
 
                     $consumer->listen($onMessage);
 
-                    $this->consumers[$queueName] = $consumer;
+                    $this->consumers[$queue->name] = $consumer;
                 }
             },
             $queues

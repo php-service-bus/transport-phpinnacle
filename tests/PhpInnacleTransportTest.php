@@ -178,7 +178,7 @@ final class PhpInnacleTransportTest extends TestCase
             function() use ($queue)
             {
                 yield $this->transport->send(
-                    OutboundPackage::create(
+                    new  OutboundPackage(
                         'somePayload',
                         ['key' => 'value'],
                         new AmqpTransportLevelDestination('consume', 'consume'),
@@ -187,7 +187,7 @@ final class PhpInnacleTransportTest extends TestCase
                 );
 
                 $this->transport->consume(
-                    function(PhpInnacleIncomingPackage $package): void
+                    static function(PhpInnacleIncomingPackage $package): void
                     {
                         static::assertInstanceOf(PhpInnacleIncomingPackage::class, $package);
                         static::assertSame('somePayload', $package->payload());

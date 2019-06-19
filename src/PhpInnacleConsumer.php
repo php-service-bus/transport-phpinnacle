@@ -76,17 +76,15 @@ final class PhpInnacleConsumer
      */
     public function listen(callable $onMessageReceived): Promise
     {
-        $queueName = (string) $this->queue;
-
         $this->logger->info('Creates new consumer on channel for queue "{queue}" with tag "{consumerTag}"', [
-            'queue'       => $queueName,
+            'queue'       => $this->queue->name,
             'consumerTag' => $this->tag,
         ]);
 
         /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
         return $this->channel->consume(
             $this->createMessageHandler($onMessageReceived),
-            $queueName,
+            $this->queue->name,
             (string) $this->tag,
             false,
             false,
@@ -118,7 +116,7 @@ final class PhpInnacleConsumer
                 $this->logger->info(
                     'Subscription canceled',
                     [
-                        'queue'       => (string) $this->queue,
+                        'queue'       => $this->queue->name,
                         'consumerTag' => $this->tag,
                     ]
                 );
@@ -142,7 +140,7 @@ final class PhpInnacleConsumer
                 $incomingPackage = PhpInnacleIncomingPackage::received($message, $channel);
 
                 $this->logger->debug('New message received from "{queueName}"', [
-                    'queueName'         => (string) $this->queue,
+                    'queueName'         => $this->queue->name,
                     'packageId'         => $incomingPackage->id(),
                     'traceId'           => $incomingPackage->traceId(),
                     'rawMessagePayload' => $incomingPackage->payload(),
