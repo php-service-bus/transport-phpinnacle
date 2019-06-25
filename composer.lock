@@ -664,16 +664,16 @@
         },
         {
             "name": "php-service-bus/transport-amqp",
-            "version": "v3.2.2",
+            "version": "v3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-service-bus/transport-amqp.git",
-                "reference": "b5a1350e4ca14f0394ea65d2582c3a9e6f6a9bf2"
+                "reference": "d315ac1c091e51b0123433fb6beb1e57eae3560b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-service-bus/transport-amqp/zipball/b5a1350e4ca14f0394ea65d2582c3a9e6f6a9bf2",
-                "reference": "b5a1350e4ca14f0394ea65d2582c3a9e6f6a9bf2",
+                "url": "https://api.github.com/repos/php-service-bus/transport-amqp/zipball/d315ac1c091e51b0123433fb6beb1e57eae3560b",
+                "reference": "d315ac1c091e51b0123433fb6beb1e57eae3560b",
                 "shasum": ""
             },
             "require": {
@@ -713,7 +713,7 @@
                 "command-bus",
                 "messaging"
             ],
-            "time": "2019-06-19T18:47:54+00:00"
+            "time": "2019-06-25T07:32:02+00:00"
         },
         {
             "name": "php-service-bus/transport-common",
