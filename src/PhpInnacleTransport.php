@@ -354,9 +354,9 @@ final class PhpInnacleTransport implements Transport
         $config = new Config(
             $connectionConfiguration->host(),
             $connectionConfiguration->port(),
-            $connectionConfiguration->virtualHost(),
             $connectionConfiguration->user(),
-            $connectionConfiguration->password()
+            $connectionConfiguration->password(),
+            $connectionConfiguration->virtualHost()
         );
 
         $timeout = 0 < $connectionConfiguration->timeout()

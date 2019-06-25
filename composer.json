@@ -35,7 +35,7 @@
     "php": ">=7.2",
     "php-service-bus/transport-common": "^v3.2",
     "php-service-bus/transport-amqp": "^v3.2",
-    "phpinnacle/ridge": "^0.2"
+    "phpinnacle/ridge": "^0.3"
   },
   "require-dev": {
     "php-service-bus/code-style-config": "^v0.1",
