@@ -130,7 +130,18 @@ final class PhpInnacleTransport implements Transport
                 }
                 catch (\Throwable $throwable)
                 {
-                    throw new ConnectionFail($throwable->getMessage(), (int) $throwable->getCode(), $throwable);
+                    throw new ConnectionFail(
+                        \sprintf(
+                            'Can\'t connect to %s:%d/%s with credentials %s:%s',
+                            $this->config->host(),
+                            $this->config->port(),
+                            $this->config->vhost(),
+                            $this->config->user(),
+                            $this->config->password()
+                        ),
+                        (int) $throwable->getCode(),
+                        $throwable
+                    );
                 }
             }
         );

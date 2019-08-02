@@ -66,7 +66,7 @@ final class PhpInnacleTransportTest extends TestCase
                 $this->transport->connect()->onResolve(
                     function(?\Throwable $throwable): \Generator
                     {
-                        if(null !== $throwable)
+                        if (null !== $throwable)
                         {
                             static::fail($throwable->getMessage());
 
@@ -76,7 +76,7 @@ final class PhpInnacleTransportTest extends TestCase
                         /** @var \PHPinnacle\Ridge\Channel|null $channel */
                         $channel = readReflectionPropertyValue($this->transport, 'channel');
 
-                        if(null !== $channel)
+                        if (null !== $channel)
                         {
                             yield $channel->exchangeDelete('createExchange');
                             yield  $channel->queueDelete('createQueue');
@@ -110,7 +110,7 @@ final class PhpInnacleTransportTest extends TestCase
                 $this->transport->connect()->onResolve(
                     function(?\Throwable $throwable): \Generator
                     {
-                        if($throwable !== null)
+                        if (null !== $throwable)
                         {
                             static::fail($throwable->getMessage());
                         }
@@ -137,7 +137,7 @@ final class PhpInnacleTransportTest extends TestCase
                 $this->transport->createTopic(AmqpExchange::topic('createExchange'))->onResolve(
                     function(?\Throwable $throwable): \Generator
                     {
-                        if($throwable !== null)
+                        if (null !== $throwable)
                         {
                             static::fail($throwable->getMessage());
                         }
@@ -164,7 +164,7 @@ final class PhpInnacleTransportTest extends TestCase
                 $this->transport->createQueue(AmqpQueue::default('createQueue'))->onResolve(
                     function(?\Throwable $throwable): \Generator
                     {
-                        if($throwable !== null)
+                        if (null !== $throwable)
                         {
                             static::fail($throwable->getMessage());
                         }
@@ -199,7 +199,7 @@ final class PhpInnacleTransportTest extends TestCase
                 $promise->onResolve(
                     function(?\Throwable $throwable): \Generator
                     {
-                        if($throwable !== null)
+                        if (null !== $throwable)
                         {
                             static::fail($throwable->getMessage());
                         }
@@ -234,7 +234,7 @@ final class PhpInnacleTransportTest extends TestCase
                 $promise->onResolve(
                     function(?\Throwable $throwable): \Generator
                     {
-                        if($throwable !== null)
+                        if (null !== $throwable)
                         {
                             static::fail($throwable->getMessage());
                         }
