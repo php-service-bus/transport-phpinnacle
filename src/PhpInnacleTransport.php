@@ -132,7 +132,7 @@ final class PhpInnacleTransport implements Transport
                 {
                     throw new ConnectionFail(
                         \sprintf(
-                            'Can\'t connect to %s:%d/%s with credentials %s:%s',
+                            'Can\'t connect to %s:%d (vhost: %s) with credentials %s:%s',
                             $this->config->host(),
                             $this->config->port(),
                             $this->config->vhost(),
