@@ -115,14 +115,9 @@ final class PhpInnacleTransport implements Transport
 
                 try
                 {
-                    /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
                     yield $this->client->connect();
 
-                    /**
-                     * @psalm-suppress TooManyTemplateParams Wrong Promise template
-                     *
-                     * @var Channel $channel
-                     */
+                    /** @var Channel $channel */
                     $channel = yield $this->client->channel();
 
                     $this->channel = $channel;
@@ -157,7 +152,6 @@ final class PhpInnacleTransport implements Transport
                 {
                     if (true === $this->client->isConnected())
                     {
-                        /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
                         yield $this->client->disconnect();
                     }
                 }
@@ -188,11 +182,7 @@ final class PhpInnacleTransport implements Transport
             {
                 yield $this->connect();
 
-                /**
-                 * @psalm-suppress TooManyTemplateParams Wrong Promise template
-                 *
-                 * @var Channel $channel
-                 */
+                /** @var Channel $channel */
                 $channel = yield $this->client->channel();
 
                 /** @var AmqpQueue $queue */

@@ -84,7 +84,6 @@ final class PhpInnaclePublisher
                     'expiredAt'          => $outboundPackage->expiredAfter,
                 ]);
 
-                /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
                 yield $channel->publish(
                     $content,
                     $destination->exchange,

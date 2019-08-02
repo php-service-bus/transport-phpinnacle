@@ -48,6 +48,13 @@ final class PhpInnacleConfigurator
     {
         $this->channel = $channel;
         $this->logger  = $logger ?? new NullLogger();
+
+        if (false === \extension_loaded('ext-buffer'))
+        {
+            $this->logger->info(
+                'Install a "ext-buffer" extension to improve performance (https://github.com/phpinnacle/ext-buffer)'
+            );
+        }
     }
 
     /**
@@ -71,14 +78,13 @@ final class PhpInnacleConfigurator
                 {
                     $this->logger->info('Creating "{queueName}" queue', ['queueName' => $queue->name]);
 
-                    /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
                     yield $this->channel->queueDeclare(
                         $queue->name,
                         $queue->passive,
                         $queue->durable,
                         $queue->exclusive,
                         $queue->autoDelete,
-                        false,
+                        true,
                         $queue->arguments
                     );
                 }
@@ -134,7 +140,6 @@ final class PhpInnacleConfigurator
                             ]
                         );
 
-                        /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
                         yield $this->channel->queueBind($queue->name, $destinationExchange->name, (string) $bind->routingKey);
                     }
                 }
@@ -173,7 +178,6 @@ final class PhpInnacleConfigurator
                 {
                     $this->logger->info('Creating "{exchangeName}" exchange', ['exchangeName' => $exchange->name]);
 
-                    /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
                     yield $this->channel->exchangeDeclare(
                         $exchange->name,
                         $exchange->type,
@@ -181,7 +185,7 @@ final class PhpInnacleConfigurator
                         $exchange->durable,
                         false,
                         false,
-                        false,
+                        true,
                         $exchange->arguments
                     );
                 }
@@ -237,7 +241,6 @@ final class PhpInnacleConfigurator
                             ]
                         );
 
-                        /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
                         yield $this->channel->exchangeBind($sourceExchange->name, $exchange->name, (string) $bind->routingKey);
                     }
                 }

@@ -32,16 +32,16 @@
     }
   },
   "require": {
-    "php": ">=7.2",
-    "php-service-bus/transport-common": "^v3.2",
-    "php-service-bus/transport-amqp": "^v3.2",
-    "phpinnacle/ridge": "^0.3"
+    "php": ">=7.3",
+    "php-service-bus/transport-common": "v3.3.*",
+    "php-service-bus/transport-amqp": "v3.3.*",
+    "phpinnacle/ridge": "0.3.*"
   },
   "require-dev": {
     "php-service-bus/code-style-config": "^v0.1",
     "phpunit/phpunit": "^8",
     "vimeo/psalm": "^v3",
-    "phpstan/phpstan": "^0.11.5"
+    "phpstan/phpstan": "0.11.*"
   },
   "prefer-stable": true,
   "minimum-stability": "stable",

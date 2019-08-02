@@ -81,7 +81,6 @@ final class PhpInnacleConsumer
             'consumerTag' => $this->tag,
         ]);
 
-        /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
         return $this->channel->consume(
             $this->createMessageHandler($onMessageReceived),
             $this->queue->name,
@@ -109,7 +108,6 @@ final class PhpInnacleConsumer
             {
                 if (null !== $this->tag)
                 {
-                    /** @psalm-suppress TooManyTemplateParams Wrong Promise template */
                     yield $this->channel->cancel($this->tag);
                 }
 
