@@ -12,7 +12,6 @@ declare(strict_types = 1);
 
 namespace ServiceBus\Transport\PhpInnacle\Tests;
 
-use function Amp\Promise\wait;
 use function ServiceBus\Common\readReflectionPropertyValue;
 use function ServiceBus\Common\uuid;
 use Amp\Loop;
@@ -48,7 +47,7 @@ final class PhpInnacleTransportTest extends TestCase
         parent::setUp();
 
         $this->transport = new PhpInnacleTransport(
-            new AmqpConnectionConfiguration((string)\getenv('TRANSPORT_CONNECTION_DSN'))
+            new AmqpConnectionConfiguration((string) \getenv('TRANSPORT_CONNECTION_DSN'))
         );
     }
 
@@ -61,22 +60,39 @@ final class PhpInnacleTransportTest extends TestCase
     {
         parent::tearDown();
 
-        /** @var \PHPinnacle\Ridge\Channel|null $channel */
-        $channel = readReflectionPropertyValue($this->transport, 'channel');
+        Loop::run(
+            function(): void
+            {
+                $this->transport->connect()->onResolve(
+                    function(?\Throwable $throwable): \Generator
+                    {
+                        if(null !== $throwable)
+                        {
+                            static::fail($throwable->getMessage());
 
-        if(null !== $channel)
-        {
-            wait($channel->exchangeDelete('createExchange'));
-            wait($channel->queueDelete('createQueue'));
+                            return;
+                        }
 
-            wait($channel->exchangeDelete('createExchange2'));
-            wait($channel->queueDelete('createQueue2'));
+                        /** @var \PHPinnacle\Ridge\Channel|null $channel */
+                        $channel = readReflectionPropertyValue($this->transport, 'channel');
 
-            wait($channel->exchangeDelete('consume'));
-            wait($channel->queueDelete('consume.messages'));
+                        if(null !== $channel)
+                        {
+                            yield $channel->exchangeDelete('createExchange');
+                            yield  $channel->queueDelete('createQueue');
 
-            wait($this->transport->disconnect());
-        }
+                            yield $channel->exchangeDelete('createExchange2');
+                            yield $channel->queueDelete('createQueue2');
+
+                            yield $channel->exchangeDelete('consume');
+                            yield $channel->queueDelete('consume.messages');
+
+                            yield  $this->transport->disconnect();
+                        }
+                    }
+                );
+            }
+        );
     }
 
     /**
@@ -88,7 +104,22 @@ final class PhpInnacleTransportTest extends TestCase
      */
     public function connect(): void
     {
-        wait($this->transport->connect());
+        Loop::run(
+            function(): void
+            {
+                $this->transport->connect()->onResolve(
+                    function(?\Throwable $throwable): \Generator
+                    {
+                        if($throwable !== null)
+                        {
+                            static::fail($throwable->getMessage());
+                        }
+
+                        yield $this->transport->disconnect();
+                    }
+                );
+            }
+        );
     }
 
     /**
@@ -100,9 +131,22 @@ final class PhpInnacleTransportTest extends TestCase
      */
     public function createExchange(): void
     {
-        wait($this->transport->createTopic(AmqpExchange::topic('createExchange')));
+        Loop::run(
+            function(): void
+            {
+                $this->transport->createTopic(AmqpExchange::topic('createExchange'))->onResolve(
+                    function(?\Throwable $throwable): \Generator
+                    {
+                        if($throwable !== null)
+                        {
+                            static::fail($throwable->getMessage());
+                        }
 
-        static::assertTrue(true);
+                        yield $this->transport->disconnect();
+                    }
+                );
+            }
+        );
     }
 
     /**
@@ -114,9 +158,22 @@ final class PhpInnacleTransportTest extends TestCase
      */
     public function createQueue(): void
     {
-        wait($this->transport->createQueue(AmqpQueue::default('createQueue')));
+        Loop::run(
+            function(): void
+            {
+                $this->transport->createQueue(AmqpQueue::default('createQueue'))->onResolve(
+                    function(?\Throwable $throwable): \Generator
+                    {
+                        if($throwable !== null)
+                        {
+                            static::fail($throwable->getMessage());
+                        }
 
-        static::assertTrue(true);
+                        yield $this->transport->disconnect();
+                    }
+                );
+            }
+        );
     }
 
     /**
@@ -128,17 +185,30 @@ final class PhpInnacleTransportTest extends TestCase
      */
     public function bindTopic(): void
     {
-        wait(
-            $this->transport->createTopic(
-                AmqpExchange::topic('createExchange'),
-                TopicBind::create(
-                    AmqpExchange::topic('createExchange2'),
-                    'qwerty'
-                )
-            )
-        );
+        Loop::run(
+            function(): void
+            {
+                $promise = $this->transport->createTopic(
+                    AmqpExchange::topic('createExchange'),
+                    TopicBind::create(
+                        AmqpExchange::topic('createExchange2'),
+                        'qwerty'
+                    )
+                );
 
-        static::assertTrue(true);
+                $promise->onResolve(
+                    function(?\Throwable $throwable): \Generator
+                    {
+                        if($throwable !== null)
+                        {
+                            static::fail($throwable->getMessage());
+                        }
+
+                        yield $this->transport->disconnect();
+                    }
+                );
+            }
+        );
     }
 
     /**
@@ -150,17 +220,30 @@ final class PhpInnacleTransportTest extends TestCase
      */
     public function bindQueue(): void
     {
-        wait(
-            $this->transport->createQueue(
-                AmqpQueue::default('createQueue'),
-                QueueBind::create(
-                    AmqpExchange::topic('createExchange2'),
-                    'qwerty'
-                )
-            )
-        );
+        Loop::run(
+            function(): void
+            {
+                $promise = $this->transport->createQueue(
+                    AmqpQueue::default('createQueue'),
+                    QueueBind::create(
+                        AmqpExchange::topic('createExchange2'),
+                        'qwerty'
+                    )
+                );
 
-        static::assertTrue(true);
+                $promise->onResolve(
+                    function(?\Throwable $throwable): \Generator
+                    {
+                        if($throwable !== null)
+                        {
+                            static::fail($throwable->getMessage());
+                        }
+
+                        yield $this->transport->disconnect();
+                    }
+                );
+            }
+        );
     }
 
     /**
@@ -172,15 +255,15 @@ final class PhpInnacleTransportTest extends TestCase
      */
     public function consume(): void
     {
-        $exchange = AmqpExchange::direct('consume');
-        $queue    = AmqpQueue::default('consume.messages');
-
-        wait($this->transport->createTopic($exchange));
-        wait($this->transport->createQueue($queue, QueueBind::create($exchange, 'consume')));
-
         Loop::run(
-            function() use ($queue)
+            function(): \Generator
             {
+                $exchange = AmqpExchange::direct('consume');
+                $queue    = AmqpQueue::default('consume.messages');
+
+                yield $this->transport->createTopic($exchange);
+                yield $this->transport->createQueue($queue, QueueBind::create($exchange, 'consume'));
+
                 yield $this->transport->send(
                     new  OutboundPackage(
                         'somePayload',
@@ -190,15 +273,15 @@ final class PhpInnacleTransportTest extends TestCase
                     )
                 );
 
-                $this->transport->consume(
-                    static function(PhpInnacleIncomingPackage $package): void
+                yield $this->transport->consume(
+                    function(PhpInnacleIncomingPackage $package): \Generator
                     {
                         static::assertInstanceOf(PhpInnacleIncomingPackage::class, $package);
                         static::assertSame('somePayload', $package->payload());
                         static::assertCount(2, $package->headers());
                         static::assertTrue(Uuid::isValid($package->traceId()));
 
-                        Loop::stop();
+                        yield $this->transport->disconnect();
                     },
                     $queue
                 );
