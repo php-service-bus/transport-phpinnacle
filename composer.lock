@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f209732db4787b83f7da6a0f1d9228e6",
+    "content-hash": "aabc2e72a700a6189007c78564197520",
     "packages": [
         {
             "name": "amphp/amp",
@@ -609,29 +609,29 @@
         },
         {
             "name": "php-service-bus/common",
-            "version": "v3.3.1",
+            "version": "v3.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-service-bus/common.git",
-                "reference": "2b349e9d51e0a500cefa115a2b8f07d29834f98e"
+                "reference": "47562c7c13d320c4e8ba36ba83f1f20e60ffe48c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-service-bus/common/zipball/2b349e9d51e0a500cefa115a2b8f07d29834f98e",
-                "reference": "2b349e9d51e0a500cefa115a2b8f07d29834f98e",
+                "url": "https://api.github.com/repos/php-service-bus/common/zipball/47562c7c13d320c4e8ba36ba83f1f20e60ffe48c",
+                "reference": "47562c7c13d320c4e8ba36ba83f1f20e60ffe48c",
                 "shasum": ""
             },
             "require": {
-                "amphp/amp": "^2",
+                "amphp/amp": "2.1.*",
                 "php": ">=7.3",
-                "ramsey/uuid": "^3.7"
+                "ramsey/uuid": "3.8.*"
             },
             "require-dev": {
-                "php-service-bus/code-style-config": "^v0.1",
-                "phpstan/phpstan": "^0.11",
-                "phpunit/phpunit": "^8",
-                "symfony/dependency-injection": "^v4.3",
-                "vimeo/psalm": "^3"
+                "php-service-bus/code-style-config": "v0.1.*",
+                "phpstan/phpstan": "0.11.*",
+                "phpunit/phpunit": "8.3.*",
+                "symfony/dependency-injection": "v4.3.*",
+                "vimeo/psalm": "3.4.*"
             },
             "type": "library",
             "autoload": {
@@ -660,20 +660,20 @@
                 "command-bus",
                 "messaging"
             ],
-            "time": "2019-07-31T13:36:08+00:00"
+            "time": "2019-08-02T16:00:22+00:00"
         },
         {
             "name": "php-service-bus/transport-amqp",
-            "version": "v3.3.0",
+            "version": "v3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-service-bus/transport-amqp.git",
-                "reference": "e5072eded010e961366cb23bae3d979e3947a114"
+                "reference": "55885ca1c7a0f09d663e4cd139c743bd22305b70"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-service-bus/transport-amqp/zipball/e5072eded010e961366cb23bae3d979e3947a114",
-                "reference": "e5072eded010e961366cb23bae3d979e3947a114",
+                "url": "https://api.github.com/repos/php-service-bus/transport-amqp/zipball/55885ca1c7a0f09d663e4cd139c743bd22305b70",
+                "reference": "55885ca1c7a0f09d663e4cd139c743bd22305b70",
                 "shasum": ""
             },
             "require": {
@@ -683,10 +683,10 @@
                 "php-service-bus/transport-common": "v3.3.*"
             },
             "require-dev": {
-                "php-service-bus/code-style-config": "^v0.1",
-                "phpstan/phpstan": "0.11.*",
-                "phpunit/phpunit": "^8",
-                "vimeo/psalm": "^v3"
+                "php-service-bus/code-style-config": "v0.1.*",
+                "phpstan/phpstan": "v0.11.*",
+                "phpunit/phpunit": "v8.3.*",
+                "vimeo/psalm": "v3.4.*"
             },
             "type": "library",
             "autoload": {
@@ -713,31 +713,31 @@
                 "command-bus",
                 "messaging"
             ],
-            "time": "2019-08-02T10:11:11+00:00"
+            "time": "2019-08-02T17:18:01+00:00"
         },
         {
             "name": "php-service-bus/transport-common",
-            "version": "v3.3.0",
+            "version": "v3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-service-bus/transport-common.git",
-                "reference": "20aaaa52e243def95d4b1dbaeb9a6515cd9f8af0"
+                "reference": "00fd0bf973596b8fa757efc02f4c0b12c623e18b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-service-bus/transport-common/zipball/20aaaa52e243def95d4b1dbaeb9a6515cd9f8af0",
-                "reference": "20aaaa52e243def95d4b1dbaeb9a6515cd9f8af0",
+                "url": "https://api.github.com/repos/php-service-bus/transport-common/zipball/00fd0bf973596b8fa757efc02f4c0b12c623e18b",
+                "reference": "00fd0bf973596b8fa757efc02f4c0b12c623e18b",
                 "shasum": ""
             },
             "require": {
-                "amphp/amp": "^2",
+                "amphp/amp": "v2.1.*",
                 "php": ">=7.3"
             },
             "require-dev": {
-                "php-service-bus/code-style-config": "^v0.1",
-                "phpstan/phpstan": "0.11.*",
-                "phpunit/phpunit": "^8",
-                "vimeo/psalm": "^v3"
+                "php-service-bus/code-style-config": "v0.1.*",
+                "phpstan/phpstan": "v0.11.*",
+                "phpunit/phpunit": "v8.3.*",
+                "vimeo/psalm": "v3.4.*"
             },
             "type": "library",
             "autoload": {
@@ -763,7 +763,7 @@
                 "command-bus",
                 "messaging"
             ],
-            "time": "2019-08-02T10:01:27+00:00"
+            "time": "2019-08-02T17:11:40+00:00"
         },
         {
             "name": "phpinnacle/buffer",
@@ -3084,16 +3084,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "8.3.1",
+            "version": "8.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "21461ce5b162d0f1a0fa658e27f975517c5d4234"
+                "reference": "e77a49b6da82240f40ddd4be536d30d7dae5c168"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/21461ce5b162d0f1a0fa658e27f975517c5d4234",
-                "reference": "21461ce5b162d0f1a0fa658e27f975517c5d4234",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/e77a49b6da82240f40ddd4be536d30d7dae5c168",
+                "reference": "e77a49b6da82240f40ddd4be536d30d7dae5c168",
                 "shasum": ""
             },
             "require": {
@@ -3163,7 +3163,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-08-02T07:54:25+00:00"
+            "time": "2019-08-02T13:42:49+00:00"
         },
         {
             "name": "psr/container",
