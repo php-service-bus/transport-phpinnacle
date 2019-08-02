@@ -40,12 +40,16 @@ final class PhpInnacleTransportTest extends TestCase
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Throwable
      */
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->transport = new PhpInnacleTransport(AmqpConnectionConfiguration::createLocalhost());
+        $this->transport = new PhpInnacleTransport(
+            new AmqpConnectionConfiguration((string)\getenv('TRANSPORT_CONNECTION_DSN'))
+        );
     }
 
     /**
@@ -60,7 +64,7 @@ final class PhpInnacleTransportTest extends TestCase
         /** @var \PHPinnacle\Ridge\Channel|null $channel */
         $channel = readReflectionPropertyValue($this->transport, 'channel');
 
-        if (null !== $channel)
+        if(null !== $channel)
         {
             wait($channel->exchangeDelete('createExchange'));
             wait($channel->queueDelete('createQueue'));
