@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aabc2e72a700a6189007c78564197520",
+    "content-hash": "952b8cdc3075d7aa5b22c27dbc0210a7",
     "packages": [
         {
             "name": "amphp/amp",
@@ -822,16 +822,16 @@
         },
         {
             "name": "phpinnacle/ridge",
-            "version": "0.3",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpinnacle/ridge.git",
-                "reference": "dc608fe5327aa81c4673c14397e1457d83f1ff53"
+                "reference": "554efedf20262cbd92d5c9aca8b56451c565e5e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpinnacle/ridge/zipball/dc608fe5327aa81c4673c14397e1457d83f1ff53",
-                "reference": "dc608fe5327aa81c4673c14397e1457d83f1ff53",
+                "url": "https://api.github.com/repos/phpinnacle/ridge/zipball/554efedf20262cbd92d5c9aca8b56451c565e5e6",
+                "reference": "554efedf20262cbd92d5c9aca8b56451c565e5e6",
                 "shasum": ""
             },
             "require": {
@@ -862,9 +862,9 @@
             "authors": [
                 {
                     "name": "PHPinnacle",
-                    "role": "Developer",
                     "email": "dev@phpinnacle.com",
-                    "homepage": "https://phpinnacle.com"
+                    "homepage": "https://phpinnacle.com",
+                    "role": "Developer"
                 }
             ],
             "description": "PHPinnacle async AMQP client",
@@ -874,7 +874,7 @@
                 "async",
                 "phpinnacle"
             ],
-            "time": "2019-06-24T18:49:53+00:00"
+            "time": "2019-08-11T18:11:27+00:00"
         },
         {
             "name": "ramsey/uuid",
