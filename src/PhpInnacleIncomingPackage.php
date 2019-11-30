@@ -35,11 +35,6 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
      */
     private ?string $id;
 
-    /**
-     * The time the message was received (Unix timestamp with microseconds).
-     */
-    private float $time;
-
     private Message $originMessage;
 
     private Channel $channel;
@@ -48,8 +43,6 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
     {
         $this->originMessage = $message;
         $this->channel       = $channel;
-
-        $this->time = (float) \microtime(true);
     }
 
     /**
@@ -63,14 +56,6 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
         }
 
         return $this->id;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function time(): float
-    {
-        return $this->time;
     }
 
     /**

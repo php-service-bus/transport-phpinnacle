@@ -179,7 +179,7 @@ final class PhpInnacleTransportTest extends TestCase
             {
                 $promise = $this->transport->createTopic(
                     AmqpExchange::topic('createExchange'),
-                    TopicBind::create(
+                    new TopicBind(
                         AmqpExchange::topic('createExchange2'),
                         'qwerty'
                     )
@@ -212,7 +212,7 @@ final class PhpInnacleTransportTest extends TestCase
             {
                 $promise = $this->transport->createQueue(
                     AmqpQueue::default('createQueue'),
-                    QueueBind::create(
+                    new  QueueBind(
                         AmqpExchange::topic('createExchange2'),
                         'qwerty'
                     )
@@ -247,7 +247,7 @@ final class PhpInnacleTransportTest extends TestCase
                 $queue    = AmqpQueue::default('consume.messages');
 
                 yield $this->transport->createTopic($exchange);
-                yield $this->transport->createQueue($queue, QueueBind::create($exchange, 'consume'));
+                yield $this->transport->createQueue($queue, new QueueBind($exchange, 'consume'));
 
                 yield $this->transport->send(
                     new  OutboundPackage(
