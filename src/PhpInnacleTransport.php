@@ -236,7 +236,7 @@ final class PhpInnacleTransport implements Transport
                 /** @var Channel $channel */
                 $channel = $this->channel;
 
-                if (null === $this->publisher)
+                if (false === isset($this->publisher))
                 {
                     $this->publisher = new PhpInnaclePublisher($channel, $this->logger);
                 }
