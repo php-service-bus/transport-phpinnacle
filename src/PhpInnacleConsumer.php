@@ -26,40 +26,23 @@ use ServiceBus\Transport\Amqp\AmqpQueue;
  */
 final class PhpInnacleConsumer
 {
-    /**
-     * @var Channel
-     */
-    private $channel;
+    private Channel $channel;
 
     /**
      * Listen queue.
-     *
-     * @var AmqpQueue
      */
-    private $queue;
+    private AmqpQueue $queue;
 
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private LoggerInterface $logger;
 
     /**
      * Consumer tag.
-     *
-     * @var string|null
      */
-    private $tag;
+    private ?string $tag;
 
-    /**
-     * @noinspection PhpDocMissingThrowsInspection
-     *
-     * @param AmqpQueue            $queue
-     * @param Channel              $channel
-     * @param LoggerInterface|null $logger
-     */
     public function __construct(AmqpQueue $queue, Channel $channel, ?LoggerInterface $logger = null)
     {
-        /** @noinspection PhpUnhandledExceptionInspection UnnecessaryCastingInspection */
+        /** @noinspection PhpUnhandledExceptionInspection */
         $this->tag = \sha1((string) \random_bytes(16));
 
         $this->queue   = $queue;
@@ -70,9 +53,9 @@ final class PhpInnacleConsumer
     /**
      * Listen queue messages.
      *
-     * @param callable(PhpInnacleIncomingPackage):\Generator $onMessageReceived
+     * @psalm-param callable(PhpInnacleIncomingPackage):\Generator $onMessageReceived
      *
-     * @return Promise
+     * @return Promise It does not return any result
      */
     public function listen(callable $onMessageReceived): Promise
     {
@@ -99,14 +82,10 @@ final class PhpInnacleConsumer
      */
     public function stop(): Promise
     {
-        /**
-         * @psalm-suppress MixedTypeCoercion
-         * @psalm-suppress InvalidArgument
-         */
         return call(
             function(): \Generator
             {
-                if (null !== $this->tag)
+                if (true === isset($this->tag))
                 {
                     yield $this->channel->cancel($this->tag);
                 }
@@ -125,9 +104,9 @@ final class PhpInnacleConsumer
     /**
      * Create listener callback.
      *
-     * @param callable(PhpInnacleIncomingPackage):\Generator $onMessageReceived
+     * @psalm-param callable(PhpInnacleIncomingPackage):\Generator $onMessageReceived
      *
-     * @return callable(Message, Channel):void
+     * @psalm-return callable(Message, Channel):void
      */
     private function createMessageHandler($onMessageReceived): callable
     {
@@ -135,7 +114,7 @@ final class PhpInnacleConsumer
         {
             try
             {
-                $incomingPackage = PhpInnacleIncomingPackage::received($message, $channel);
+                $incomingPackage = new PhpInnacleIncomingPackage($message, $channel);
 
                 $this->logger->debug('New message received from "{queueName}"', [
                     'queueName'         => $this->queue->name,
@@ -145,7 +124,6 @@ final class PhpInnacleConsumer
                     'rawMessageHeaders' => $incomingPackage->headers(),
                 ]);
 
-                /** @psalm-suppress InvalidArgument */
                 asyncCall($onMessageReceived, $incomingPackage);
 
                 unset($incomingPackage);

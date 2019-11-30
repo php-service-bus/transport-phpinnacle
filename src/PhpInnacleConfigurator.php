@@ -30,20 +30,10 @@ use ServiceBus\Transport\Common\Exceptions\CreateTopicFailed;
  */
 final class PhpInnacleConfigurator
 {
-    /**
-     * @var Channel
-     */
-    private $channel;
+    private Channel $channel;
 
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private LoggerInterface $logger;
 
-    /**
-     * @param Channel              $channel
-     * @param LoggerInterface|null $logger
-     */
     public function __construct(Channel $channel, ?LoggerInterface $logger = null)
     {
         $this->channel = $channel;
@@ -62,15 +52,10 @@ final class PhpInnacleConfigurator
      *
      * @noinspection PhpDocRedundantThrowsInspection
      *
-     * @param AmqpQueue $queue
-     *
      * @throws \ServiceBus\Transport\Common\Exceptions\CreateQueueFailed
-     *
-     * @return Promise
      */
     public function doCreateQueue(AmqpQueue $queue): Promise
     {
-        /** @psalm-suppress InvalidArgument */
         return call(
             function(AmqpQueue $queue): \Generator
             {
@@ -108,16 +93,12 @@ final class PhpInnacleConfigurator
      *
      * @psalm-param  array<mixed, \ServiceBus\Transport\Common\QueueBind> $binds
      *
-     * @param AmqpQueue                                $queue
      * @param \ServiceBus\Transport\Common\QueueBind[] $binds
      *
      * @throws \ServiceBus\Transport\Common\Exceptions\BindFailed
-     *
-     * @return Promise
      */
     public function doBindQueue(AmqpQueue $queue, array $binds): Promise
     {
-        /** @psalm-suppress InvalidArgument */
         return call(
             function(AmqpQueue $queue, array $binds): \Generator
             {
@@ -162,15 +143,10 @@ final class PhpInnacleConfigurator
      *
      * @noinspection PhpDocRedundantThrowsInspection
      *
-     * @param AmqpExchange $exchange
-     *
      * @throws \ServiceBus\Transport\Common\Exceptions\CreateTopicFailed
-     *
-     * @return Promise
      */
     public function doCreateExchange(AmqpExchange $exchange): Promise
     {
-        /** @psalm-suppress InvalidArgument */
         return call(
             function(AmqpExchange $exchange): \Generator
             {
@@ -209,16 +185,12 @@ final class PhpInnacleConfigurator
      *
      * @psalm-param  array<mixed, \ServiceBus\Transport\Common\TopicBind> $binds
      *
-     * @param AmqpExchange                             $exchange
      * @param \ServiceBus\Transport\Common\TopicBind[] $binds
      *
      * @throws \ServiceBus\Transport\Common\Exceptions\BindFailed
-     *
-     * @return Promise
      */
     public function doBindExchange(AmqpExchange $exchange, array $binds): Promise
     {
-        /** @psalm-suppress InvalidArgument */
         return call(
             function(AmqpExchange $exchange, array $binds): \Generator
             {

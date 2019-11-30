@@ -38,51 +38,29 @@ final class PhpInnacleTransport implements Transport
 {
     /**
      * Client for work with AMQP protocol.
-     *
-     * @var Client
      */
-    private $client;
+    private Client $client;
 
     /**
-     * Channel client.
-     *
-     * Null if not connected
-     *
-     * @var Channel|null
+     * Null if not connected.
      */
-    private $channel;
+    private ?Channel $channel;
 
-    /**
-     * Publisher.
-     *
-     * @var PhpInnaclePublisher|null
-     */
-    private $publisher;
+    private ?PhpInnaclePublisher $publisher;
 
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private LoggerInterface $logger;
 
     /**
      * @psalm-var array<string, \ServiceBus\Transport\PhpInnacle\PhpInnacleConsumer>
      *
      * @var \ServiceBus\Transport\PhpInnacle\PhpInnacleConsumer[]
      */
-    private $consumers = [];
+    private array
 
-    /**
-     * AMQP configuration.
-     *
-     * @var Config
-     */
-    private $config;
+ $consumers = [];
 
-    /**
-     * @param AmqpConnectionConfiguration $connectionConfig
-     * @param AmqpQoSConfiguration|null   $qosConfig
-     * @param LoggerInterface|null        $logger
-     */
+    private Config $config;
+
     public function __construct(
         AmqpConnectionConfiguration $connectionConfig,
         AmqpQoSConfiguration $qosConfig = null,
@@ -101,10 +79,6 @@ final class PhpInnacleTransport implements Transport
      */
     public function connect(): Promise
     {
-        /**
-         * @psalm-suppress MixedTypeCoercion
-         * @psalm-suppress InvalidArgument
-         */
         return call(
             function(): \Generator
             {
@@ -152,10 +126,6 @@ final class PhpInnacleTransport implements Transport
      */
     public function disconnect(): Promise
     {
-        /**
-         * @psalm-suppress MixedTypeCoercion
-         * @psalm-suppress InvalidArgument
-         */
         return call(
             function(): \Generator
             {
@@ -185,9 +155,8 @@ final class PhpInnacleTransport implements Transport
      *
      * {@inheritdoc}
      */
-    public function consume(callable $onMessage, Queue ... $queues): Promise
+    public function consume(callable $onMessage, Queue ...$queues): Promise
     {
-        /** @psalm-suppress InvalidArgument */
         return call(
             function(array $queues) use ($onMessage): \Generator
             {
@@ -223,7 +192,6 @@ final class PhpInnacleTransport implements Transport
      */
     public function stop(): Promise
     {
-        /** @psalm-suppress InvalidArgument */
         return call(
             function(array $consumers): \Generator
             {
@@ -260,7 +228,6 @@ final class PhpInnacleTransport implements Transport
      */
     public function send(OutboundPackage $outboundPackage): Promise
     {
-        /** @psalm-suppress InvalidArgument */
         return call(
             function(OutboundPackage $outboundPackage): \Generator
             {
@@ -287,7 +254,6 @@ final class PhpInnacleTransport implements Transport
     {
         /** @var AmqpExchange $topic */
 
-        /** @psalm-suppress InvalidArgument */
         return call(
             function(AmqpExchange $exchange, array $binds): \Generator
             {
@@ -317,7 +283,6 @@ final class PhpInnacleTransport implements Transport
     {
         /** @var AmqpQueue $queue */
 
-        /** @psalm-suppress InvalidArgument */
         return call(
             function(AmqpQueue $queue, array $binds): \Generator
             {
@@ -340,14 +305,6 @@ final class PhpInnacleTransport implements Transport
         );
     }
 
-    /**
-     * Create phpinnacle configuration.
-     *
-     * @param AmqpConnectionConfiguration $connectionConfiguration
-     * @param AmqpQoSConfiguration        $qoSConfiguration
-     *
-     * @return Config
-     */
     private function adaptConfig(
         AmqpConnectionConfiguration $connectionConfiguration,
         AmqpQoSConfiguration $qoSConfiguration

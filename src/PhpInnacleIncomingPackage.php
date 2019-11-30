@@ -32,37 +32,24 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
 {
     /**
      * Received package id.
-     *
-     * @var string|null
      */
-    private $id;
+    private ?string $id;
 
     /**
      * The time the message was received (Unix timestamp with microseconds).
-     *
-     * @var float
      */
-    private $time;
+    private float $time;
 
-    /**
-     * @var Message
-     */
-    private $originMessage;
+    private Message $originMessage;
 
-    /**
-     * @var Channel
-     */
-    private $channel;
+    private Channel $channel;
 
-    /**
-     * @param Message $message
-     * @param Channel $channel
-     *
-     * @return self
-     */
-    public static function received(Message $message, Channel $channel): self
+    public function __construct(Message $message, Channel $channel)
     {
-        return new self($message, $channel);
+        $this->originMessage = $message;
+        $this->channel       = $channel;
+
+        $this->time = (float) \microtime(true);
     }
 
     /**
@@ -70,7 +57,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
      */
     public function id(): string
     {
-        if (null === $this->id)
+        if (false === isset($this->id))
         {
             $this->id = uuid();
         }
@@ -150,7 +137,6 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
      */
     public function nack(bool $requeue, ?string $withReason = null): Promise
     {
-        /** @psalm-suppress InvalidArgument */
         return call(
             function(bool $requeue): \Generator
             {
@@ -172,7 +158,6 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
      */
     public function reject(bool $requeue, ?string $withReason = null): Promise
     {
-        /** @psalm-suppress InvalidArgument */
         return call(
             function(bool $requeue): \Generator
             {
@@ -202,19 +187,5 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
         }
 
         return $traceId;
-    }
-
-    /**
-     * PhpInnacleIncomingPackage constructor.
-     *
-     * @param Message $message
-     * @param Channel $channel
-     */
-    private function __construct(Message $message, Channel $channel)
-    {
-        $this->originMessage = $message;
-        $this->channel       = $channel;
-
-        $this->time = (float) \microtime(true);
     }
 }

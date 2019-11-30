@@ -26,20 +26,10 @@ final class PhpInnaclePublisher
 {
     private const AMQP_DURABLE = 2;
 
-    /**
-     * @var Channel
-     */
-    private $channel;
+    private Channel $channel;
 
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private LoggerInterface $logger;
 
-    /**
-     * @param Channel         $channel
-     * @param LoggerInterface $logger
-     */
     public function __construct(Channel $channel, LoggerInterface $logger)
     {
         $this->channel = $channel;
@@ -48,14 +38,9 @@ final class PhpInnaclePublisher
 
     /**
      * Send message to broker.
-     *
-     * @param OutboundPackage $outboundPackage
-     *
-     * @return Promise
      */
     public function process(OutboundPackage $outboundPackage): Promise
     {
-        /** @psalm-suppress InvalidArgument */
         return call(
             function(OutboundPackage $outboundPackage): \Generator
             {

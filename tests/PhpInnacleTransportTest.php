@@ -32,10 +32,7 @@ use ServiceBus\Transport\PhpInnacle\PhpInnacleTransport;
  */
 final class PhpInnacleTransportTest extends TestCase
 {
-    /**
-     * @var PhpInnacleTransport
-     */
-    private $transport;
+    private PhpInnacleTransport $transport;
 
     /**
      * {@inheritdoc}
@@ -99,8 +96,6 @@ final class PhpInnacleTransportTest extends TestCase
      * @test
      *
      * @throws \Throwable
-     *
-     * @return void
      */
     public function connect(): void
     {
@@ -126,8 +121,6 @@ final class PhpInnacleTransportTest extends TestCase
      * @test
      *
      * @throws \Throwable
-     *
-     * @return void
      */
     public function createExchange(): void
     {
@@ -153,8 +146,6 @@ final class PhpInnacleTransportTest extends TestCase
      * @test
      *
      * @throws \Throwable
-     *
-     * @return void
      */
     public function createQueue(): void
     {
@@ -180,8 +171,6 @@ final class PhpInnacleTransportTest extends TestCase
      * @test
      *
      * @throws \Throwable
-     *
-     * @return void
      */
     public function bindTopic(): void
     {
@@ -215,8 +204,6 @@ final class PhpInnacleTransportTest extends TestCase
      * @test
      *
      * @throws \Throwable
-     *
-     * @return void
      */
     public function bindQueue(): void
     {
@@ -250,8 +237,6 @@ final class PhpInnacleTransportTest extends TestCase
      * @test
      *
      * @throws \Throwable
-     *
-     * @return void
      */
     public function consume(): void
     {
