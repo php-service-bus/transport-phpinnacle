@@ -57,7 +57,7 @@ final class PhpInnacleConfigurator
     public function doCreateQueue(AmqpQueue $queue): Promise
     {
         return call(
-            function(AmqpQueue $queue): \Generator
+            function (AmqpQueue $queue): \Generator
             {
                 try
                 {
@@ -100,7 +100,7 @@ final class PhpInnacleConfigurator
     public function doBindQueue(AmqpQueue $queue, array $binds): Promise
     {
         return call(
-            function(AmqpQueue $queue, array $binds): \Generator
+            function (AmqpQueue $queue, array $binds): \Generator
             {
                 try
                 {
@@ -148,7 +148,7 @@ final class PhpInnacleConfigurator
     public function doCreateExchange(AmqpExchange $exchange): Promise
     {
         return call(
-            function(AmqpExchange $exchange): \Generator
+            function (AmqpExchange $exchange): \Generator
             {
                 try
                 {
@@ -192,7 +192,7 @@ final class PhpInnacleConfigurator
     public function doBindExchange(AmqpExchange $exchange, array $binds): Promise
     {
         return call(
-            function(AmqpExchange $exchange, array $binds): \Generator
+            function (AmqpExchange $exchange, array $binds): \Generator
             {
                 try
                 {

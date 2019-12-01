@@ -103,7 +103,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
          * @psalm-suppress InvalidArgument
          */
         return call(
-            function(): \Generator
+            function (): \Generator
             {
                 try
                 {
@@ -123,7 +123,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
     public function nack(bool $requeue, ?string $withReason = null): Promise
     {
         return call(
-            function(bool $requeue): \Generator
+            function (bool $requeue): \Generator
             {
                 try
                 {
@@ -144,7 +144,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
     public function reject(bool $requeue, ?string $withReason = null): Promise
     {
         return call(
-            function(bool $requeue): \Generator
+            function (bool $requeue): \Generator
             {
                 try
                 {

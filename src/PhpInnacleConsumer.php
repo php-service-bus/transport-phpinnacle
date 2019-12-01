@@ -83,7 +83,7 @@ final class PhpInnacleConsumer
     public function stop(): Promise
     {
         return call(
-            function(): \Generator
+            function (): \Generator
             {
                 if (true === isset($this->tag))
                 {
@@ -110,7 +110,7 @@ final class PhpInnacleConsumer
      */
     private function createMessageHandler($onMessageReceived): callable
     {
-        return function(Message $message, Channel $channel) use ($onMessageReceived): void
+        return function (Message $message, Channel $channel) use ($onMessageReceived): void
         {
             try
             {

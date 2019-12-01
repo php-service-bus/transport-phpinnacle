@@ -55,9 +55,7 @@ final class PhpInnacleTransport implements Transport
      *
      * @var \ServiceBus\Transport\PhpInnacle\PhpInnacleConsumer[]
      */
-    private array
-
- $consumers = [];
+    private array $consumers = [];
 
     private Config $config;
 
@@ -80,7 +78,7 @@ final class PhpInnacleTransport implements Transport
     public function connect(): Promise
     {
         return call(
-            function(): \Generator
+            function (): \Generator
             {
                 if (true === $this->client->isConnected())
                 {
@@ -127,7 +125,7 @@ final class PhpInnacleTransport implements Transport
     public function disconnect(): Promise
     {
         return call(
-            function(): \Generator
+            function (): \Generator
             {
                 try
                 {
@@ -158,7 +156,7 @@ final class PhpInnacleTransport implements Transport
     public function consume(callable $onMessage, Queue ...$queues): Promise
     {
         return call(
-            function(array $queues) use ($onMessage): \Generator
+            function (array $queues) use ($onMessage): \Generator
             {
                 yield $this->connect();
 
@@ -193,7 +191,7 @@ final class PhpInnacleTransport implements Transport
     public function stop(): Promise
     {
         return call(
-            function(array $consumers): \Generator
+            function (array $consumers): \Generator
             {
                 /**
                  * @var string             $queueName
@@ -229,7 +227,7 @@ final class PhpInnacleTransport implements Transport
     public function send(OutboundPackage $outboundPackage): Promise
     {
         return call(
-            function(OutboundPackage $outboundPackage): \Generator
+            function (OutboundPackage $outboundPackage): \Generator
             {
                 yield $this->connect();
 
@@ -255,7 +253,7 @@ final class PhpInnacleTransport implements Transport
         /** @var AmqpExchange $topic */
 
         return call(
-            function(AmqpExchange $exchange, array $binds): \Generator
+            function (AmqpExchange $exchange, array $binds): \Generator
             {
                 /**
                  * @var \ServiceBus\Transport\Common\TopicBind[] $binds
@@ -284,7 +282,7 @@ final class PhpInnacleTransport implements Transport
         /** @var AmqpQueue $queue */
 
         return call(
-            function(AmqpQueue $queue, array $binds): \Generator
+            function (AmqpQueue $queue, array $binds): \Generator
             {
                 /**
                  * @var \ServiceBus\Transport\Common\QueueBind[] $binds

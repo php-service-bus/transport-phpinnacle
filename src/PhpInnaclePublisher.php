@@ -42,7 +42,7 @@ final class PhpInnaclePublisher
     public function process(OutboundPackage $outboundPackage): Promise
     {
         return call(
-            function(OutboundPackage $outboundPackage): \Generator
+            function (OutboundPackage $outboundPackage): \Generator
             {
                 /** @var Channel $channel */
                 $channel = $this->channel;
