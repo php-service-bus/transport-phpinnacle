@@ -38,7 +38,7 @@ final class PhpInnacleConsumer
     /**
      * Consumer tag.
      */
-    private ?string $tag;
+    private ?string $tag = null;
 
     public function __construct(AmqpQueue $queue, Channel $channel, ?LoggerInterface $logger = null)
     {
@@ -64,6 +64,7 @@ final class PhpInnacleConsumer
             'consumerTag' => $this->tag,
         ]);
 
+        /** @psalm-suppress TooManyTemplateParams */
         return $this->channel->consume(
             $this->createMessageHandler($onMessageReceived),
             $this->queue->name,
@@ -85,8 +86,9 @@ final class PhpInnacleConsumer
         return call(
             function (): \Generator
             {
-                if (true === isset($this->tag))
+                if ($this->tag !== null)
                 {
+                    /** @psalm-suppress TooManyTemplateParams */
                     yield $this->channel->cancel($this->tag);
                 }
 

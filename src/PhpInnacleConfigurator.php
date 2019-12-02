@@ -39,7 +39,7 @@ final class PhpInnacleConfigurator
         $this->channel = $channel;
         $this->logger  = $logger ?? new NullLogger();
 
-        if (false === \extension_loaded('ext-buffer'))
+        if (\extension_loaded('ext-buffer') === false)
         {
             $this->logger->info(
                 'Install a "ext-buffer" extension to improve performance (https://github.com/phpinnacle/ext-buffer)'
@@ -63,6 +63,7 @@ final class PhpInnacleConfigurator
                 {
                     $this->logger->info('Creating "{queueName}" queue', ['queueName' => $queue->name]);
 
+                    /** @psalm-suppress TooManyTemplateParams */
                     yield $this->channel->queueDeclare(
                         $queue->name,
                         $queue->passive,
@@ -110,6 +111,7 @@ final class PhpInnacleConfigurator
                         /** @var AmqpExchange $destinationExchange */
                         $destinationExchange = $bind->destinationTopic;
 
+                        /** @psalm-suppress TooManyTemplateParams */
                         yield $this->doCreateExchange($destinationExchange);
 
                         $this->logger->info(
@@ -121,6 +123,7 @@ final class PhpInnacleConfigurator
                             ]
                         );
 
+                        /** @psalm-suppress TooManyTemplateParams */
                         yield $this->channel->queueBind($queue->name, $destinationExchange->name, (string) $bind->routingKey);
                     }
                 }
@@ -154,6 +157,7 @@ final class PhpInnacleConfigurator
                 {
                     $this->logger->info('Creating "{exchangeName}" exchange', ['exchangeName' => $exchange->name]);
 
+                    /** @psalm-suppress TooManyTemplateParams */
                     yield $this->channel->exchangeDeclare(
                         $exchange->name,
                         $exchange->type,
@@ -213,6 +217,7 @@ final class PhpInnacleConfigurator
                             ]
                         );
 
+                        /** @psalm-suppress TooManyTemplateParams */
                         yield $this->channel->exchangeBind($sourceExchange->name, $exchange->name, (string) $bind->routingKey);
                     }
                 }

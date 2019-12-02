@@ -33,7 +33,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
     /**
      * Received package id.
      */
-    private ?string $id;
+    private ?string $id = null;
 
     private Message $originMessage;
 
@@ -50,7 +50,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
      */
     public function id(): string
     {
-        if (false === isset($this->id))
+        if ($this->id === null)
         {
             $this->id = uuid();
         }
@@ -107,6 +107,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
             {
                 try
                 {
+                    /** @psalm-suppress TooManyTemplateParams */
                     yield $this->channel->ack($this->originMessage);
                 }
                 catch (\Throwable $throwable)
@@ -127,6 +128,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
             {
                 try
                 {
+                    /** @psalm-suppress TooManyTemplateParams */
                     yield $this->channel->nack($this->originMessage, false, $requeue);
                 }
                 catch (\Throwable $throwable)
@@ -148,6 +150,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
             {
                 try
                 {
+                    /** @psalm-suppress TooManyTemplateParams */
                     yield $this->channel->reject($this->originMessage, $requeue);
                 }
                 catch (\Throwable $throwable)
@@ -166,7 +169,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
     {
         $traceId = (string) $this->originMessage->header(Transport::SERVICE_BUS_TRACE_HEADER);
 
-        if ('' === $traceId)
+        if ($traceId === '')
         {
             $traceId = uuid();
         }

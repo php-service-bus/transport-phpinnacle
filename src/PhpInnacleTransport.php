@@ -87,9 +87,14 @@ final class PhpInnacleTransport implements Transport
 
                 try
                 {
+                    /** @psalm-suppress TooManyTemplateParams */
                     yield $this->client->connect();
 
-                    /** @var Channel $channel */
+                    /**
+                     * @psalm-suppress TooManyTemplateParams
+                     *
+                     * @var Channel $channel
+                     */
                     $channel = yield $this->client->channel();
 
                     $this->channel = $channel;
@@ -131,6 +136,7 @@ final class PhpInnacleTransport implements Transport
                 {
                     if (true === $this->client->isConnected())
                     {
+                        /** @psalm-suppress TooManyTemplateParams */
                         yield $this->client->disconnect();
                     }
                 }
@@ -149,8 +155,6 @@ final class PhpInnacleTransport implements Transport
     }
 
     /**
-     * @psalm-suppress MixedTypeCoercion
-     *
      * {@inheritdoc}
      */
     public function consume(callable $onMessage, Queue ...$queues): Promise
@@ -160,7 +164,11 @@ final class PhpInnacleTransport implements Transport
             {
                 yield $this->connect();
 
-                /** @var Channel $channel */
+                /**
+                 * @psalm-suppress TooManyTemplateParams
+                 *
+                 * @var Channel $channel
+                 */
                 $channel = yield $this->client->channel();
 
                 /** @var AmqpQueue $queue */
