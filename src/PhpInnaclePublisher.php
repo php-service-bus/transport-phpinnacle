@@ -26,9 +26,11 @@ final class PhpInnaclePublisher
 {
     private const AMQP_DURABLE = 2;
 
-    private Channel $channel;
+    /** @var Channel */
+    private $channel;
 
-    private LoggerInterface $logger;
+    /** @var LoggerInterface */
+    private $logger;
 
     public function __construct(Channel $channel, LoggerInterface $logger)
     {
@@ -48,7 +50,7 @@ final class PhpInnaclePublisher
                 $channel = $this->channel;
 
                 $internalHeaders = [
-                    'delivery-mode'                     => true === $outboundPackage->persistentFlag ? self::AMQP_DURABLE : null,
+                    'delivery-mode'                     => $outboundPackage->persistentFlag === true ? self::AMQP_DURABLE : null,
                     'expiration'                        => $outboundPackage->expiredAfter,
                     Transport::SERVICE_BUS_TRACE_HEADER => $outboundPackage->traceId,
                 ];

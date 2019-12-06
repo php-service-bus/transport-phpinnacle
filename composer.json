@@ -32,7 +32,7 @@
     }
   },
   "require": {
-    "php": ">=7.4",
+    "php": ">=7.3",
     "php-service-bus/transport-common": "v4.0.*",
     "php-service-bus/transport-amqp": "v4.0.*",
     "phpinnacle/ridge": "v1.0.*"

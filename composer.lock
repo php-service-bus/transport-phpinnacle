@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "97ed49e3b85831d1be173a9a3802a550",
+    "content-hash": "d8bbc13aaf9d01f58b422110a79a43ec",
     "packages": [
         {
             "name": "amphp/amp",
@@ -587,16 +587,16 @@
         },
         {
             "name": "daverandom/libdns",
-            "version": "v2.0.1",
+            "version": "v2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DaveRandom/LibDNS.git",
-                "reference": "1ecd825b6fa9bb3fddc07751997e29dc78749b95"
+                "reference": "e8b6d6593d18ac3a6a14666d8a68a4703b2e05f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DaveRandom/LibDNS/zipball/1ecd825b6fa9bb3fddc07751997e29dc78749b95",
-                "reference": "1ecd825b6fa9bb3fddc07751997e29dc78749b95",
+                "url": "https://api.github.com/repos/DaveRandom/LibDNS/zipball/e8b6d6593d18ac3a6a14666d8a68a4703b2e05f9",
+                "reference": "e8b6d6593d18ac3a6a14666d8a68a4703b2e05f9",
                 "shasum": ""
             },
             "require": {
@@ -623,7 +623,7 @@
             "keywords": [
                 "dns"
             ],
-            "time": "2018-01-10T15:56:17+00:00"
+            "time": "2019-12-03T09:12:46+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -672,22 +672,22 @@
         },
         {
             "name": "php-service-bus/common",
-            "version": "v4.0.1",
+            "version": "v4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-service-bus/common.git",
-                "reference": "ae3c1b3801039124c1ca2b5b278ad13a6f3e2801"
+                "reference": "baa7c41700d09b66ee7c131590bb0c2f39bff8f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-service-bus/common/zipball/ae3c1b3801039124c1ca2b5b278ad13a6f3e2801",
-                "reference": "ae3c1b3801039124c1ca2b5b278ad13a6f3e2801",
+                "url": "https://api.github.com/repos/php-service-bus/common/zipball/baa7c41700d09b66ee7c131590bb0c2f39bff8f6",
+                "reference": "baa7c41700d09b66ee7c131590bb0c2f39bff8f6",
                 "shasum": ""
             },
             "require": {
                 "amphp/amp": "v2.4.*",
                 "ext-json": "*",
-                "php": ">=7.4",
+                "php": ">=7.3",
                 "ramsey/uuid": "v3.8.*"
             },
             "require-dev": {
@@ -724,25 +724,25 @@
                 "command-bus",
                 "messaging"
             ],
-            "time": "2019-12-02T14:33:55+00:00"
+            "time": "2019-12-03T22:21:56+00:00"
         },
         {
             "name": "php-service-bus/transport-amqp",
-            "version": "v4.0.2",
+            "version": "v4.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-service-bus/transport-amqp.git",
-                "reference": "c65182a311d0195f9da5a659a9f2eea9843ecd89"
+                "reference": "0ff423780bd56b70f10a52f5162be323dc18e0ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-service-bus/transport-amqp/zipball/c65182a311d0195f9da5a659a9f2eea9843ecd89",
-                "reference": "c65182a311d0195f9da5a659a9f2eea9843ecd89",
+                "url": "https://api.github.com/repos/php-service-bus/transport-amqp/zipball/0ff423780bd56b70f10a52f5162be323dc18e0ea",
+                "reference": "0ff423780bd56b70f10a52f5162be323dc18e0ea",
                 "shasum": ""
             },
             "require": {
                 "ext-mbstring": "*",
-                "php": ">=7.4",
+                "php": ">=7.3",
                 "php-service-bus/common": "v4.0.*",
                 "php-service-bus/transport-common": "v4.0.*"
             },
@@ -777,25 +777,25 @@
                 "command-bus",
                 "messaging"
             ],
-            "time": "2019-12-02T19:09:38+00:00"
+            "time": "2019-12-05T23:55:35+00:00"
         },
         {
             "name": "php-service-bus/transport-common",
-            "version": "v4.0.2",
+            "version": "v4.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-service-bus/transport-common.git",
-                "reference": "c6aab22f808ed48a88d0039176a87eb68f1e41b6"
+                "reference": "568b0cdc437ad21a6f62173bfff3566073c64378"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-service-bus/transport-common/zipball/c6aab22f808ed48a88d0039176a87eb68f1e41b6",
-                "reference": "c6aab22f808ed48a88d0039176a87eb68f1e41b6",
+                "url": "https://api.github.com/repos/php-service-bus/transport-common/zipball/568b0cdc437ad21a6f62173bfff3566073c64378",
+                "reference": "568b0cdc437ad21a6f62173bfff3566073c64378",
                 "shasum": ""
             },
             "require": {
                 "amphp/amp": "v2.4.*",
-                "php": ">=7.4"
+                "php": ">=7.3"
             },
             "require-dev": {
                 "php-service-bus/code-style-config": "v1.2.*",
@@ -827,7 +827,7 @@
                 "command-bus",
                 "messaging"
             ],
-            "time": "2019-12-02T19:03:51+00:00"
+            "time": "2019-12-04T00:44:46+00:00"
         },
         {
             "name": "phpinnacle/buffer",
@@ -2530,21 +2530,21 @@
         },
         {
             "name": "php-service-bus/code-style-config",
-            "version": "v1.2.0",
+            "version": "v1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-service-bus/code-style-config.git",
-                "reference": "ab89a1963973c3639e2e43aa61addb694ede44fa"
+                "reference": "dff63007fe0fa3c7c0fb67c4dccbeedaac1a14c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-service-bus/code-style-config/zipball/ab89a1963973c3639e2e43aa61addb694ede44fa",
-                "reference": "ab89a1963973c3639e2e43aa61addb694ede44fa",
+                "url": "https://api.github.com/repos/php-service-bus/code-style-config/zipball/dff63007fe0fa3c7c0fb67c4dccbeedaac1a14c3",
+                "reference": "dff63007fe0fa3c7c0fb67c4dccbeedaac1a14c3",
                 "shasum": ""
             },
             "require": {
                 "friendsofphp/php-cs-fixer": "v2.16.*",
-                "php": ">=7.4"
+                "php": ">=7.3"
             },
             "type": "library",
             "autoload": {
@@ -2565,7 +2565,7 @@
                 }
             ],
             "description": "PHP Service Bus code style config",
-            "time": "2019-12-01T19:26:37+00:00"
+            "time": "2019-12-03T22:09:48+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -4735,16 +4735,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "3.7.1",
+            "version": "3.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "8e6aa8a07d148dcedf58cccf32ce4b602b422035"
+                "reference": "d9cae720c1af31db9ba27c2bc1fcf9b0dd092fb0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/8e6aa8a07d148dcedf58cccf32ce4b602b422035",
-                "reference": "8e6aa8a07d148dcedf58cccf32ce4b602b422035",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/d9cae720c1af31db9ba27c2bc1fcf9b0dd092fb0",
+                "reference": "d9cae720c1af31db9ba27c2bc1fcf9b0dd092fb0",
                 "shasum": ""
             },
             "require": {
@@ -4819,7 +4819,7 @@
                 "inspection",
                 "php"
             ],
-            "time": "2019-12-02T05:11:45+00:00"
+            "time": "2019-12-03T13:33:31+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -4969,7 +4969,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.4"
+        "php": ">=7.3"
     },
     "platform-dev": []
 }

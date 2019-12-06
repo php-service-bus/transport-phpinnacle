@@ -26,19 +26,25 @@ use ServiceBus\Transport\Amqp\AmqpQueue;
  */
 final class PhpInnacleConsumer
 {
-    private Channel $channel;
+    /** @var Channel  */
+    private $channel;
 
     /**
      * Listen queue.
+     *
+     * @var AmqpQueue
      */
-    private AmqpQueue $queue;
+    private $queue;
 
-    private LoggerInterface $logger;
+    /** @var LoggerInterface */
+    private $logger;
 
     /**
      * Consumer tag.
+     *
+     * @var string|null
      */
-    private ?string $tag = null;
+    private $tag = null;
 
     public function __construct(AmqpQueue $queue, Channel $channel, ?LoggerInterface $logger = null)
     {

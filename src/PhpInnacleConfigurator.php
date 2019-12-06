@@ -30,9 +30,11 @@ use ServiceBus\Transport\Common\Exceptions\CreateTopicFailed;
  */
 final class PhpInnacleConfigurator
 {
-    private Channel $channel;
+    /** @var Channel */
+    private $channel;
 
-    private LoggerInterface $logger;
+    /** @var LoggerInterface */
+    private $logger;
 
     public function __construct(Channel $channel, ?LoggerInterface $logger = null)
     {

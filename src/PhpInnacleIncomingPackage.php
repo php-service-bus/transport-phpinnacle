@@ -32,12 +32,16 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
 {
     /**
      * Received package id.
+     *
+     * @var string|null
      */
-    private ?string $id = null;
+    private $id = null;
 
-    private Message $originMessage;
+    /** @var Message */
+    private $originMessage;
 
-    private Channel $channel;
+    /** @var Channel */
+    private $channel;
 
     public function __construct(Message $message, Channel $channel)
     {

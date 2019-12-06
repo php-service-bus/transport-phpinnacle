@@ -32,7 +32,8 @@ use ServiceBus\Transport\PhpInnacle\PhpInnacleTransport;
  */
 final class PhpInnacleTransportTest extends TestCase
 {
-    private PhpInnacleTransport $transport;
+    /** @var PhpInnacleTransport */
+    private $transport;
 
     /**
      * {@inheritdoc}

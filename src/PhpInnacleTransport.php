@@ -38,26 +38,33 @@ final class PhpInnacleTransport implements Transport
 {
     /**
      * Client for work with AMQP protocol.
+     *
+     * @var Client
      */
-    private Client $client;
+    private $client;
 
     /**
      * Null if not connected.
+     *
+     * @var Channel|null
      */
-    private ?Channel $channel;
+    private $channel = null;
 
-    private ?PhpInnaclePublisher $publisher;
+    /** @var PhpInnaclePublisher|null */
+    private $publisher = null;
 
-    private LoggerInterface $logger;
+    /** @var LoggerInterface */
+    private $logger;
 
     /**
      * @psalm-var array<string, \ServiceBus\Transport\PhpInnacle\PhpInnacleConsumer>
      *
      * @var \ServiceBus\Transport\PhpInnacle\PhpInnacleConsumer[]
      */
-    private array $consumers = [];
+    private $consumers = [];
 
-    private Config $config;
+    /** @var Config */
+    private $config;
 
     public function __construct(
         AmqpConnectionConfiguration $connectionConfig,
@@ -80,7 +87,7 @@ final class PhpInnacleTransport implements Transport
         return call(
             function (): \Generator
             {
-                if (true === $this->client->isConnected())
+                if ($this->client->isConnected() === true)
                 {
                     return;
                 }
@@ -134,7 +141,7 @@ final class PhpInnacleTransport implements Transport
             {
                 try
                 {
-                    if (true === $this->client->isConnected())
+                    if ($this->client->isConnected() === true)
                     {
                         /** @psalm-suppress TooManyTemplateParams */
                         yield $this->client->disconnect();
@@ -214,7 +221,7 @@ final class PhpInnacleTransport implements Transport
                         'queueName' => $queueName,
                     ]);
 
-                    if (true === isset($this->consumers[$queueName]))
+                    if (isset($this->consumers[$queueName]) === true)
                     {
                         /** @var PhpInnacleConsumer $consumer */
                         $consumer = $this->consumers[$queueName];
@@ -242,7 +249,7 @@ final class PhpInnacleTransport implements Transport
                 /** @var Channel $channel */
                 $channel = $this->channel;
 
-                if (false === isset($this->publisher))
+                if ($this->publisher === null)
                 {
                     $this->publisher = new PhpInnaclePublisher($channel, $this->logger);
                 }
