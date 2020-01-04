@@ -44,7 +44,7 @@ final class PhpInnacleConsumer
      *
      * @var string|null
      */
-    private $tag = null;
+    private $tag;
 
     public function __construct(AmqpQueue $queue, Channel $channel, ?LoggerInterface $logger = null)
     {
@@ -105,6 +105,8 @@ final class PhpInnacleConsumer
                         'consumerTag' => $this->tag,
                     ]
                 );
+
+                $this->tag = null;
             }
         );
     }

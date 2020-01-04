@@ -59,7 +59,7 @@ final class PhpInnacleConfigurator
     public function doCreateQueue(AmqpQueue $queue): Promise
     {
         return call(
-            function (AmqpQueue $queue): \Generator
+            function () use ($queue): \Generator
             {
                 try
                 {
@@ -84,8 +84,7 @@ final class PhpInnacleConfigurator
 
                     throw CreateQueueFailed::fromThrowable($throwable);
                 }
-            },
-            $queue
+            }
         );
     }
 
@@ -103,7 +102,7 @@ final class PhpInnacleConfigurator
     public function doBindQueue(AmqpQueue $queue, array $binds): Promise
     {
         return call(
-            function (AmqpQueue $queue, array $binds): \Generator
+            function () use ($queue, $binds): \Generator
             {
                 try
                 {
@@ -137,9 +136,7 @@ final class PhpInnacleConfigurator
 
                     throw BindFailed::fromThrowable($throwable);
                 }
-            },
-            $queue,
-            $binds
+            }
         );
     }
 
@@ -153,7 +150,7 @@ final class PhpInnacleConfigurator
     public function doCreateExchange(AmqpExchange $exchange): Promise
     {
         return call(
-            function (AmqpExchange $exchange): \Generator
+            function () use ($exchange): \Generator
             {
                 try
                 {
@@ -179,8 +176,7 @@ final class PhpInnacleConfigurator
 
                     throw CreateTopicFailed::fromThrowable($throwable);
                 }
-            },
-            $exchange
+            }
         );
     }
 
@@ -198,7 +194,7 @@ final class PhpInnacleConfigurator
     public function doBindExchange(AmqpExchange $exchange, array $binds): Promise
     {
         return call(
-            function (AmqpExchange $exchange, array $binds): \Generator
+            function () use ($exchange, $binds): \Generator
             {
                 try
                 {
@@ -231,9 +227,7 @@ final class PhpInnacleConfigurator
 
                     throw BindFailed::fromThrowable($throwable);
                 }
-            },
-            $exchange,
-            $binds
+            }
         );
     }
 }

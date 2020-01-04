@@ -128,7 +128,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
     public function nack(bool $requeue, ?string $withReason = null): Promise
     {
         return call(
-            function (bool $requeue): \Generator
+            function () use ($requeue): \Generator
             {
                 try
                 {
@@ -139,8 +139,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
                 {
                     throw new NotAcknowledgeFailed($throwable->getMessage(), (int) $throwable->getCode(), $throwable);
                 }
-            },
-            $requeue
+            }
         );
     }
 
@@ -150,7 +149,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
     public function reject(bool $requeue, ?string $withReason = null): Promise
     {
         return call(
-            function (bool $requeue): \Generator
+            function () use ($requeue): \Generator
             {
                 try
                 {
@@ -161,8 +160,7 @@ final class PhpInnacleIncomingPackage implements IncomingPackage
                 {
                     throw new RejectFailed($throwable->getMessage(), (int) $throwable->getCode(), $throwable);
                 }
-            },
-            $requeue
+            }
         );
     }
 

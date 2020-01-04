@@ -167,7 +167,7 @@ final class PhpInnacleTransport implements Transport
     public function consume(callable $onMessage, Queue ...$queues): Promise
     {
         return call(
-            function (array $queues) use ($onMessage): \Generator
+            function () use ($queues, $onMessage): \Generator
             {
                 yield $this->connect();
 
@@ -195,8 +195,7 @@ final class PhpInnacleTransport implements Transport
 
                     $this->consumers[$queue->name] = $consumer;
                 }
-            },
-            $queues
+            }
         );
     }
 
@@ -206,13 +205,13 @@ final class PhpInnacleTransport implements Transport
     public function stop(): Promise
     {
         return call(
-            function (array $consumers): \Generator
+            function (): \Generator
             {
                 /**
                  * @var string             $queueName
                  * @var PhpInnacleConsumer $consumer
                  */
-                foreach ($consumers as $queueName => $consumer)
+                foreach ($this->consumers as $queueName => $consumer)
                 {
                     $this->logger->info('Completing the subscription to the "{queueName}" queue', [
                         'host'      => $this->config->host(),
@@ -231,8 +230,7 @@ final class PhpInnacleTransport implements Transport
                         unset($this->consumers[$queueName]);
                     }
                 }
-            },
-            $this->consumers
+            }
         );
     }
 
@@ -242,7 +240,7 @@ final class PhpInnacleTransport implements Transport
     public function send(OutboundPackage $outboundPackage): Promise
     {
         return call(
-            function (OutboundPackage $outboundPackage): \Generator
+            function () use ($outboundPackage): \Generator
             {
                 yield $this->connect();
 
@@ -255,8 +253,7 @@ final class PhpInnacleTransport implements Transport
                 }
 
                 yield $this->publisher->process($outboundPackage);
-            },
-            $outboundPackage
+            }
         );
     }
 
@@ -265,11 +262,12 @@ final class PhpInnacleTransport implements Transport
      */
     public function createTopic(Topic $topic, TopicBind ...$binds): Promise
     {
-        /** @var AmqpExchange $topic */
-
         return call(
-            function (AmqpExchange $exchange, array $binds): \Generator
+            function () use ($topic, $binds): \Generator
             {
+                /** @var AmqpExchange $amqpExchange */
+                $amqpExchange = $topic;
+
                 /**
                  * @var \ServiceBus\Transport\Common\TopicBind[] $binds
                  * @psalm-var array<mixed, \ServiceBus\Transport\Common\TopicBind> $binds
@@ -281,11 +279,9 @@ final class PhpInnacleTransport implements Transport
 
                 $configurator = new PhpInnacleConfigurator($channel);
 
-                yield $configurator->doCreateExchange($exchange);
-                yield $configurator->doBindExchange($exchange, $binds);
-            },
-            $topic,
-            $binds
+                yield $configurator->doCreateExchange($amqpExchange);
+                yield $configurator->doBindExchange($amqpExchange, $binds);
+            }
         );
     }
 
@@ -294,11 +290,12 @@ final class PhpInnacleTransport implements Transport
      */
     public function createQueue(Queue $queue, QueueBind ...$binds): Promise
     {
-        /** @var AmqpQueue $queue */
-
         return call(
-            function (AmqpQueue $queue, array $binds): \Generator
+            function () use ($queue, $binds): \Generator
             {
+                /** @var AmqpQueue $amqpQueue */
+                $amqpQueue = $queue;
+
                 /**
                  * @var \ServiceBus\Transport\Common\QueueBind[] $binds
                  * @psalm-var array<mixed, \ServiceBus\Transport\Common\QueueBind> $binds
@@ -310,11 +307,9 @@ final class PhpInnacleTransport implements Transport
 
                 $configurator = new PhpInnacleConfigurator($channel);
 
-                yield $configurator->doCreateQueue($queue);
-                yield $configurator->doBindQueue($queue, $binds);
-            },
-            $queue,
-            $binds
+                yield $configurator->doCreateQueue($amqpQueue);
+                yield $configurator->doBindQueue($amqpQueue, $binds);
+            }
         );
     }
 

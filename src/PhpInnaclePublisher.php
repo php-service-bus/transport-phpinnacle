@@ -44,7 +44,7 @@ final class PhpInnaclePublisher
     public function process(OutboundPackage $outboundPackage): Promise
     {
         return call(
-            function (OutboundPackage $outboundPackage): \Generator
+            function () use ($outboundPackage): \Generator
             {
                 /** @var Channel $channel */
                 $channel = $this->channel;
@@ -80,8 +80,7 @@ final class PhpInnaclePublisher
                     $outboundPackage->mandatoryFlag,
                     $outboundPackage->immediateFlag
                 );
-            },
-            $outboundPackage
+            }
         );
     }
 }
